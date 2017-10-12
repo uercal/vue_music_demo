@@ -4,8 +4,8 @@ import App from './App.vue';
 import VueRouter from 'vue-router';
 
 //resource or axios
-import VueResource from 'vue-resource';
-// import Axios from 'axios';
+// import VueResource from 'vue-resource';
+import Axios from 'axios';
 
 // 引入ui框架
 import Element from 'element-ui'
@@ -16,8 +16,8 @@ Vue.use(Element)
 Vue.config.debug = true;
 
 Vue.use(VueRouter);
-Vue.use(VueResource);
-// Vue.prototype.$http = Axios;
+// Vue.use(VueResource);
+Vue.prototype.$http = Axios;
 
 
 //定义组件

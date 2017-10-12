@@ -3,13 +3,15 @@
     <h1>{{title}}</h1>
     <a> written by {{ author }} </a>
     <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>
-    <el-card class="box-card"> 
-      <img id="bgm" v-if="isload" :src="bgm.src" class="avatar" style="height:100px" :title="bgm.title" @click="Onbgm"></img>
-      <ul v-if="isshow" v-for="value in bgm.tracks">
-        <a href='javascript:;' @click="play(value.id)">{{value.name}}</a>
+    <el-card class="box-card">
+      <li v-for='(value,index) in bgm' v-if="isload">        
+        <img :src="value.src" class="avatar" style="height:100px" :title="value.title" @click="Onbgm(index)"></img>
+      </li>
+      <ul v-if="isshow" v-for="value in playbgm">
+          <a href='javascript:;' @click="play(value.id)">{{value.name}}</a>
       </ul>
     </el-card>
-    <audio ref="audio"></audio>
+    <audio ref='audio'></audio>  
   </div>  
 </template>
 
@@ -17,59 +19,62 @@
 export default {
   data() {
     return {
+      ids:3,
       title:'Second',
       author: "uercal",
       isload:false,
       isshow:false,
-      isPlaying:false,
-      bgm:{
-        title:'',
-        src:'',
-        tracks:[]
-      }      
+      // isPlaying:false,
+      bgm:[],
+      playbgm:[]      
     }
   },
-  mounted:function(){    
-    this.$http.get('https://bird.ioliu.cn/netease/playlist?id=864480097',{},{
-      // this.$http.jsonp('http://localhost:1122/base/teachers/list',{},{
-      headers:{},
-      emulateJSON:true
-    }).then(function(res){       
-      // this.articles = res.data      
-      this.bgm.title = res.data.playlist.name;
-      this.bgm.src = res.data.playlist.coverImgUrl;
-      this.bgm.tracks=res.data.playlist.tracks;
-      this.isload = true;
-    },function(res){
-      console.log(res)
-    });
+  mounted:function(){
+    var ids = [867822471,150524989,815980319];
+    var data =[];
+    for(var i in ids){
+      this.$http.get('https://bird.ioliu.cn/netease/playlist?id='+ids[i],{},{    
+        headers:{},
+        emulateJSON:true
+      }).then(function(res){                    
+        data.push({
+          title:res.data.playlist.name,
+          src:res.data.playlist.coverImgUrl,
+          tracks:res.data.playlist.tracks
+        });        
+      },function(res){
+        console.log(res)
+      });      
+    }
+    this.bgm = data;
+    this.isload = true;    
+    // console.log(data);
   },
   methods:{
-    Onbgm:function(){      
-      this.isload = false;
+    Onbgm:function(index){
+      console.log(index);
+      this.playbgm = this.bgm[index]['tracks'];
+      console.log(this.playbgm);
       this.isshow = true;
     },
     play:function(id){         
       this.$http.get('https://bird.ioliu.cn/netease/song?id='+id,{},{      
         headers:{},
         emulateJSON:true
-      }).then(function(res){
-        // console.log(res.data.data.mp3.url);
-        this.isPlaying = true;           
+      }).then(res=>{
         let audio = this.$refs.audio;
-        audio.src = res.data.data.mp3.url;        
+        audio.src = res.data.data.mp3.url;
         audio.play();
-        this.isPlaying = true;
-      },function(res){
-        console.log(res)
-      });
+      }).catch(function(res){
+        console.log(res);
+      });         
     }
   }
 }
 </script>
 
 <style lang="scss">
-.box-card #bgm{
+.box-card .avatar{
   cursor:pointer;
 }
 </style>
