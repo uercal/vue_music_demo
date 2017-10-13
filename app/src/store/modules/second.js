@@ -23,7 +23,6 @@ const getters = {
     audio: state => state.audio
 }
 
-
 const actions = {
     Onbgm: ({ commit }, index) => {
         console.log(index);
@@ -44,11 +43,13 @@ const actions = {
         });
 
     },
-    getBgm({ commit }) {
-        var data = [];
-        var ids = state.ids;
-        for (var i in ids) {
-            axios.get('https://bird.ioliu.cn/netease/playlist?id=' + ids[i], {}, {
+    getBgm({ commit }, payload) {
+        console.log('run getBgm');
+        console.log(payload);
+        let data = [];
+        let ids = state.ids;
+        for (let i of ids) {
+            axios.get('https://bird.ioliu.cn/netease/playlist?id=' + i, {}, {
                 headers: {},
                 emulateJSON: true
             }).then(function(res) {
@@ -65,8 +66,6 @@ const actions = {
     }
 }
 
-
-
 //传递给vue需要改变的数据（方法）
 const mutations = {
     ['LOADED_BGM'](state, { data }) {
@@ -79,8 +78,6 @@ const mutations = {
         state.isshow = true;
     }
 }
-
-
 
 export default {
     state,

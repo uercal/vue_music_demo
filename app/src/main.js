@@ -1,7 +1,7 @@
 //引入vue  以及 主vue文件
-import Vue from 'vue';
-import App from './App.vue';
-import VueRouter from 'vue-router';
+import Vue from 'vue'
+import App from './App.vue'
+import VueRouter from 'vue-router'
 import store from './store/index'
 //resource or axios
 // import VueResource from 'vue-resource';

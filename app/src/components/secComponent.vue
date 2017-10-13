@@ -18,21 +18,21 @@
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  computed: mapGetters({
-    title:'title',
-    author:'author',
-    playbgm:'playbgm',
-    isload:'isload',
-    isshow:'isshow',
-    bgm:'bgm',
-    audio:'audio'
-  }),
-  methods: mapActions({
-    Onbgm:'Onbgm',
-    play:'play'
-  }),
+  computed: mapGetters([
+    'title',
+    'author',
+    'playbgm',
+    'isload',
+    'isshow',
+    'bgm',
+    'audio'
+  ]),
+  methods: mapActions([
+    'Onbgm',
+    'play'
+  ]),
   mounted(){
-    this.$store.dispatch('getBgm');
+    this.$store.dispatch('getBgm',{msg:"i am payload"});
   }
 }
 </script>
