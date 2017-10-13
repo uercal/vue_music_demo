@@ -1,32 +1,29 @@
 <template>
-  <div id="firstcomponent">
-    <h1>First.</h1>
-    <a> written by {{ author }} </a>
-    <ul>
-      <li>
-        <a href='javascript:;'></a>
-      </li>        
-    </ul>
+  <div>
+    Value: {{ count_first }}
+    <button @click="increment_first">+</button>
+    <button @click="decrement_first">-</button>
+    <button @click="incrementIfOdd_first">Increment if odd</button>
+    <button @click="incrementAsync_first">Increment async</button>
+    <div>
+      <div>Recent History (last 5 entries): {{ recentHistory }}</div>
+    </div>
   </div>
-    
 </template>
 
-<script type="text/javascript">
+<script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
-  data () {
-    return {
-      author: "uercal",
-      data:[]
-    }
-  },mounted:function(){    
-    this.$http.get('http://localhost:1122/base/teachers/list').then(function(res){       
-      console.log(res.data);
-    },function(res){
-      console.log(res)
-    });
-  }
+  computed: mapGetters([
+    'count_first',
+    'recentHistory'
+  ]),
+  methods: mapActions([
+    'increment_first',
+    'decrement_first',
+    'incrementIfOdd_first',
+    'incrementAsync_first'
+  ])
 }
 </script>
-
-<style>
-</style>

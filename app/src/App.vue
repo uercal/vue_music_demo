@@ -4,8 +4,8 @@
     <h1>{{ msg }}</h1>       
     <ul>
       <li><router-link to="/first">111</router-link></li>
-      <li><router-link to="/second">222</router-link></li>
-      <li><a href='javascript:;' @click="play">play</a></li>
+      <li><router-link to="/second">Music</router-link></li>
+      <li><router-link to="/demo">demo</router-link></li>
     </ul>
     <router-view class="view"></router-view>
   </div>
@@ -18,11 +18,6 @@ export default {
   data () {
     return {
       msg: 'Welcome to Uercal\'s App'      
-    }
-  },
-  methods:{
-    play:function(){         
-      // this.msg = '123'
     }
   }
 }

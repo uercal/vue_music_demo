@@ -11,64 +11,28 @@
           <a href='javascript:;' @click="play(value.id)">{{value.name}}</a>
       </ul>
     </el-card>
-    <audio ref='audio'></audio>  
   </div>  
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
-  data() {
-    return {
-      ids:3,
-      title:'Second',
-      author: "uercal",
-      isload:false,
-      isshow:false,
-      // isPlaying:false,
-      bgm:[],
-      playbgm:[]      
-    }
-  },
-  mounted:function(){
-    var ids = [867822471,150524989,815980319];
-    var data =[];
-    for(var i in ids){
-      this.$http.get('https://bird.ioliu.cn/netease/playlist?id='+ids[i],{},{    
-        headers:{},
-        emulateJSON:true
-      }).then(function(res){                    
-        data.push({
-          title:res.data.playlist.name,
-          src:res.data.playlist.coverImgUrl,
-          tracks:res.data.playlist.tracks
-        });        
-      },function(res){
-        console.log(res)
-      });      
-    }
-    this.bgm = data;
-    this.isload = true;    
-    // console.log(data);
-  },
-  methods:{
-    Onbgm:function(index){
-      console.log(index);
-      this.playbgm = this.bgm[index]['tracks'];
-      console.log(this.playbgm);
-      this.isshow = true;
-    },
-    play:function(id){         
-      this.$http.get('https://bird.ioliu.cn/netease/song?id='+id,{},{      
-        headers:{},
-        emulateJSON:true
-      }).then(res=>{
-        let audio = this.$refs.audio;
-        audio.src = res.data.data.mp3.url;
-        audio.play();
-      }).catch(function(res){
-        console.log(res);
-      });         
-    }
+  computed: mapGetters({
+    title:'title',
+    author:'author',
+    playbgm:'playbgm',
+    isload:'isload',
+    isshow:'isshow',
+    bgm:'bgm',
+    audio:'audio'
+  }),
+  methods: mapActions({
+    Onbgm:'Onbgm',
+    play:'play'
+  }),
+  mounted(){
+    this.$store.dispatch('getBgm');
   }
 }
 </script>

@@ -2,10 +2,10 @@
 import Vue from 'vue';
 import App from './App.vue';
 import VueRouter from 'vue-router';
-
+import store from './store/index'
 //resource or axios
 // import VueResource from 'vue-resource';
-import Axios from 'axios';
+// import Axios from 'axios';
 
 // 引入ui框架
 import Element from 'element-ui'
@@ -14,17 +14,17 @@ Vue.use(Element)
 
 //开启debug模式
 Vue.config.debug = true;
-
+// console.log('123')
 Vue.use(VueRouter);
 // Vue.use(VueResource);
-Vue.prototype.$http = Axios;
+// Vue.prototype.$http = Axios;
 
 
 //定义组件
 const play = { template: '<div><h1>This is Play</h1></div>' }
 import firstComponent from './components/firstComponent.vue'
 import secComponent from './components/secComponent.vue'
-
+import demoComponent from './components/demoComponent.vue'
 
 
 //创建路由实例  
@@ -47,6 +47,10 @@ const router = new VueRouter({
         {
             path: '/second',
             component: secComponent
+        },
+        {
+            path: '/demo',
+            component: demoComponent
         }
     ]
 })
@@ -56,5 +60,6 @@ const router = new VueRouter({
 //创建app实例
 const app = new Vue({
     router: router,
+    store,
     render: h => h(App) //渲染
 }).$mount('#app');
