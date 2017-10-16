@@ -1,16 +1,21 @@
 <template>
   <div id="secondcomponent">
     <h1>{{title}}</h1>
+    <audio ref="audio" src="" controls="controls"></audio>
+    <br>
     <a> written by {{ author }} </a>
-    <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>
-    <el-card class="box-card">
-      <li v-for='(value,index) in bgm' v-if="isload">        
+    <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>    
+    <el-button @click="showBgm">{{ show_title }}</el-button>
+    <transition name="slide-fade">
+    <el-card class="box-card" v-if="isload">
+      <li v-for='(value,index) in bgm'>
         <img :src="value.src" class="avatar" style="height:100px" :title="value.title" @click="Onbgm(index)"></img>
-      </li>
-      <ul v-if="isshow" v-for="value in playbgm">
-          <a href='javascript:;' @click="play(value.id)">{{value.name}}</a>
-      </ul>
+      </li> 
     </el-card>
+    </transition>
+    <ul v-if="isshow" v-for="value in playbgm">     
+        <el-button href='javascript:;' @click="play(value.id)">{{value.name}}</el-button>
+    </ul>    
   </div>  
 </template>
 
@@ -25,19 +30,34 @@ export default {
     'isload',
     'isshow',
     'bgm',
-    'audio'
+    'audio',
+    'show_title'
   ]),
-  methods: mapActions([
-    'Onbgm',
+  methods:    
+    mapActions([
+    'Onbgm',    
+    'showBgm',
     'play'
-  ]),
+    ])       
+    ,
   mounted(){
-    this.$store.dispatch('getBgm',{msg:"i am payload"});
+    this.$store.dispatch('getBgm',{audio:this.$refs.audio});
   }
 }
 </script>
 
 <style lang="scss">
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 .box-card .avatar{
   cursor:pointer;
 }

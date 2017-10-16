@@ -7,7 +7,7 @@ const state = {
     author: "uercal",
     isload: false,
     isshow: false,
-    // isPlaying:false,
+    show_title: 'SHOW',
     bgm: [],
     playbgm: [],
     audio: new Audio()
@@ -18,6 +18,7 @@ const getters = {
     author: state => state.author,
     isload: state => state.isload,
     isshow: state => state.isshow,
+    show_title: state => state.show_title,
     bgm: state => state.bgm,
     playbgm: state => state.playbgm,
     audio: state => state.audio
@@ -29,15 +30,17 @@ const actions = {
         let data = state.bgm[index]['tracks'];
         commit('LOADED_TRACKS', { data })
     },
-    play: ({ commit }, id) => {
+    play: ({ commit }, id, audio) => {
         console.log(id);
         axios.get('https://bird.ioliu.cn/netease/song?id=' + id, {}, {
             headers: {},
             emulateJSON: true
         }).then(res => {
+            console.log(state.audio);
             state.audio.src = res.data.data.mp3.url;
             state.audio.load();
             state.audio.play();
+
         }).catch(function(res) {
             console.log(res);
         });
@@ -62,20 +65,29 @@ const actions = {
                 console.log(err)
             });
         }
-        commit('LOADED_BGM', { data })
+        commit('LOADED_BGM', { data, payload });
+        // commit('SHOWBGM', {});
+    },
+    showBgm({ commit }) {
+        commit('SHOWBGM', {});
     }
 }
 
 //传递给vue需要改变的数据（方法）
 const mutations = {
-    ['LOADED_BGM'](state, { data }) {
+    ['LOADED_BGM'](state, { data, payload }) {
         state.bgm = data;
-        state.isload = true;
+        state.audio = payload.audio;
     },
 
     ['LOADED_TRACKS'](state, { data }) {
         state.playbgm = data;
         state.isshow = true;
+    },
+
+    ['SHOWBGM'](state, {}) {
+        state.show_title = state.show_title == 'SHOW' ? 'HIDDEN' : 'SHOW'
+        state.isload = !state.isload
     }
 }
 
