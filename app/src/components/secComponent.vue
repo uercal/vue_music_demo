@@ -1,13 +1,14 @@
 <template>
   <div id="secondcomponent">
-    <h1>{{title}}</h1>
-    <audio ref="audio" src="" controls="controls"></audio>
-    <br>
+    <h1>{{title}}</h1>        
     <a> written by {{ author }} </a>
     <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>    
     <el-button @click="showBgm">{{ show_title }}</el-button>
     <transition name="slide-fade">
-    <el-card class="box-card" v-if="isload">
+    <el-card class="box-card" v-show="isload">
+      <audio id="audio" src="" controls="controls"></audio>    
+      <br>
+      <br>
       <li v-for='(value,index) in bgm'>
         <img :src="value.src" class="avatar" style="height:100px" :title="value.title" @click="Onbgm(index)"></img>
       </li> 
@@ -41,7 +42,8 @@ export default {
     ])       
     ,
   mounted(){
-    this.$store.dispatch('getBgm',{audio:this.$refs.audio});
+    // console.log(this.$el.querySelector('#audio'));
+    this.$store.dispatch('getBgm',{audio:this.$el.querySelector('#audio')});
   }
 }
 </script>

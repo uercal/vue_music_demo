@@ -36,7 +36,7 @@ const actions = {
             headers: {},
             emulateJSON: true
         }).then(res => {
-            console.log(state.audio);
+            // console.log(state.audio);
             state.audio.src = res.data.data.mp3.url;
             state.audio.load();
             state.audio.play();
@@ -48,7 +48,7 @@ const actions = {
     },
     getBgm({ commit }, payload) {
         console.log('run getBgm');
-        console.log(payload);
+        // console.log(payload);
         let data = [];
         let ids = state.ids;
         for (let i of ids) {
