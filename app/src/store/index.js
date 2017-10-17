@@ -8,6 +8,7 @@ import * as getters from './getters'
 import demo from './modules/demo'
 import first from './modules/first'
 import second from './modules/second'
+import cart from './modules/cart'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ export default new Vuex.Store({
     modules: {
         demo,
         first,
-        second
+        second,
+        cart
     },
     getters,
     actions

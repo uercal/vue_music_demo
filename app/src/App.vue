@@ -1,26 +1,18 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>       
+    <img src="./assets/2.png">         
     <ul>
       <li><router-link to="/first">111</router-link></li>
       <li><router-link to="/second">Music</router-link></li>
       <li><router-link to="/demo">demo</router-link></li>
+      <li><router-link to="/Cart">Cart</router-link></li>
     </ul>
     <router-view class="view"></router-view>
   </div>
-
 </template>
 
 <script>
-export default {
-  name: 'app',
-  data () {
-    return {
-      msg: 'Welcome to Uercal\'s App'      
-    }
-  }
-}
+
 </script>
 
 <style lang="scss">

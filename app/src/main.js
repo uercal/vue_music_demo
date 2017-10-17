@@ -6,6 +6,9 @@ import store from './store/index'
 //resource or axios
 // import VueResource from 'vue-resource';
 // import Axios from 'axios';
+import { currency } from './store/currency'
+
+
 
 // 引入ui框架
 import Element from 'element-ui'
@@ -19,13 +22,17 @@ Vue.use(VueRouter);
 // Vue.use(VueResource);
 // Vue.prototype.$http = Axios;
 
+//过滤器
+Vue.filter('currency', currency);
+
+
 
 //定义组件
 const play = { template: '<div><h1>This is Play</h1></div>' }
 import firstComponent from './components/firstComponent.vue'
 import secComponent from './components/secComponent.vue'
 import demoComponent from './components/demoComponent.vue'
-
+import Cart from './components/Cart/main.vue'
 
 //创建路由实例  
 //配置路由规则
@@ -51,6 +58,10 @@ const router = new VueRouter({
         {
             path: '/demo',
             component: demoComponent
+        },
+        {
+            path: '/Cart',
+            component: Cart
         }
     ]
 })
