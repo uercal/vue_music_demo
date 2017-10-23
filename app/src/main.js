@@ -41,7 +41,7 @@ import Cart from './components/Cart/main.vue'
 const router = new VueRouter({
     //hash(支持所有浏览器) history(依赖h5_api和服务器配置) 
     //abstract:支持所有JavaScript运行环境,如Node.js服务器端。如果发现没有浏览器的 API，路由会自动强制进入这个模式。
-    mode: 'history', //hash,history,abstract
+    mode: 'hash', //hash,history,abstract
     base: __dirname, //应用基路径
     routes: [{
             path: '/play',

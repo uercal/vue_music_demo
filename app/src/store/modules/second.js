@@ -1,8 +1,10 @@
 import axios from 'axios'
-//
+// import jsonp from 'jsonp'
+// import qs from 'qs'
+// //
 
 const state = {
-    ids: [867822471, 150524989, 815980319, 864480097],
+    ids: [867822471, 150524989, 864480097, 963404566],
     title: 'Second',
     author: "uercal",
     isload: false,
@@ -51,15 +53,18 @@ const actions = {
         // console.log(payload);
         let data = [];
         let ids = state.ids;
+        let url = 'http://music.163.com/api/playlist/detail?id=';
+        // url = url + '815980319';
         for (let i of ids) {
-            axios.get('https://bird.ioliu.cn/netease/playlist?id=' + i, {}, {
+            axios.get('https://bird.ioliu.cn/v2/?url=' + url + i, {
                 headers: {},
                 emulateJSON: true
             }).then(function(res) {
+                console.log(res.data.result);
                 data.push({
-                    title: res.data.playlist.name,
-                    src: res.data.playlist.coverImgUrl,
-                    tracks: res.data.playlist.tracks
+                    title: res.data.result.name,
+                    src: res.data.result.coverImgUrl,
+                    tracks: res.data.result.tracks
                 });
             }).catch(function(err) {
                 console.log(err)
