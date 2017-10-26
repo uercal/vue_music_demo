@@ -3,6 +3,12 @@ import Vue from 'vue'
 import Chat from './components/chat.vue'
 import store from './store'
 
+import Element from 'element-ui'
+import '../assets/theme/index.css'
+
+Vue.use(Element)
+
+
 
 Vue.config.debug = true
 

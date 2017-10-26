@@ -4,6 +4,7 @@
       <!-- <span v-show="unreadCount">
         Unread threads: {{ unreadCount }}
       </span> -->
+      <el-button @click="back">←</el-button>
     </div>
     <ul class="thread-list">      
       <thread 
@@ -31,8 +32,10 @@ export default {
   methods:{
     ...mapActions([
       'switchThread'
-    ])
-    
+    ]),
+    back:()=>{
+      window.location.href = '/'
+    }
   },
   mounted:function(){
     this.$store.dispatch('getAllMessages');    
