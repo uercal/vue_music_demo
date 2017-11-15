@@ -2,7 +2,7 @@ import Vue from 'vue'
 // 
 import Vuex from 'vuex'
 // 
-import data from '../api/data'
+// import data from '../api/data'
 //
 import * as getters from './getters'
 import * as actions from './actions'
