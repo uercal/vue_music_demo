@@ -13,7 +13,7 @@ const state = {
     bgm: [],
     playbgm: [],
     audio: new Audio(),
-    backStyle: "background-image: url('');data-stellar-background-ratio:'0.5'",
+    backStyle: "background-image: url('')",
 }
 
 const getters = {
@@ -45,7 +45,7 @@ const actions = {
             state.audio.src = res.data;
             state.audio.load();
             state.audio.play();
-            state.backStyle = "background: url('" + backUrl + "');";
+            state.backStyle = "background: url('"+backUrl+"');";
 
         }).catch(function(res) {
             console.log('error');

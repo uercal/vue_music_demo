@@ -1,6 +1,6 @@
 <template>
-  <div id="secondcomponent">
-    <div :style="backStyle" id="back">
+  <div id="secondcomponent" style="position:relative;">
+    <div>
     <el-button @click="back" style="position:relative;float:left;">←</el-button>
     <br>
     <h1>{{title}}</h1>        
@@ -21,7 +21,8 @@
         <el-button href='javascript:;' @click="play(value)">{{value.name}}</el-button>
     </ul>    
     </div>
-  </div>  
+    <div id="back" :style="backStyle"></div>
+  </div>
 </template>
 
 <script>
@@ -77,8 +78,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 0px;
-  
+  margin-top: 0px;  
 }
 h1, h2 {
   font-weight: normal;
@@ -99,18 +99,27 @@ a {
 }
 
 .el-card{
-  background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
-  background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
-}
-#audio{
-  background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
-  background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+  background-color:#000000;
+  background-color:rgba(0,0,0,0);
 }
 .el-button {
-  background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
-  background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+  background-color:#000000;
+  background-color:rgba(0,0,0,0.2);
   border: 0; 
-  padding:0;
+  //padding:0;
+}
+#back{
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;  
+  opacity: 0.5;
+  z-index:-1;
 }
 </style>
 
