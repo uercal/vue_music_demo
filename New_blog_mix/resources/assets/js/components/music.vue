@@ -1,5 +1,6 @@
 <template>
   <div id="secondcomponent">
+    <div :style="backStyle" id="back">
     <el-button @click="back" style="position:relative;float:left;">←</el-button>
     <br>
     <h1>{{title}}</h1>        
@@ -17,16 +18,18 @@
     </el-card>
     </transition>
     <ul v-if="isshow" v-for="value in playbgm">     
-        <el-button href='javascript:;' @click="play(value.id)">{{value.name}}</el-button>
+        <el-button href='javascript:;' @click="play(value)">{{value.name}}</el-button>
     </ul>    
+    </div>
   </div>  
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-export default {
+export default {  
   computed: mapGetters([
+    'backStyle',
     'title',
     'author',
     'playbgm',
@@ -48,8 +51,8 @@ export default {
     }
   },
   mounted(){
-    // console.log(this.$el.querySelector('#audio'));
-    this.$store.dispatch('getBgm',{audio:this.$el.querySelector('#audio')});
+    // console.log(this.$el.querySelector('#audio'));    
+    this.$store.dispatch('getBgm',{audio:this.$el.querySelector('#audio')});    
   }
 }
 </script>
@@ -75,6 +78,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 0px;
+  
 }
 h1, h2 {
   font-weight: normal;
@@ -92,6 +96,21 @@ li {
 
 a {
   color: #42b983;
+}
+
+.el-card{
+  background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+  background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+#audio{
+  background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+  background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+}
+.el-button {
+  background-color:#000000;/* IE6和部分IE7内核的浏览器(如QQ浏览器)下颜色被覆盖 */
+  background-color:rgba(0,0,0,0.2); /* IE6和部分IE7内核的浏览器(如QQ浏览器)会读懂，但解析为透明 */
+  border: 0; 
+  padding:0;
 }
 </style>
 

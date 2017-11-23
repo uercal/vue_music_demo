@@ -2,12 +2,12 @@
   <div id="app">
     <img src="../static/logo.png"> 
     <ul>      
-      <el-button onclick="window.location.href='/music'">
+      <el-button onclick="window.location.href='/chat'">
         chat
       </el-button>              
     </ul>    
     <ul>
-      <el-button onclick="window.location.href='/second'">
+      <el-button onclick="window.location.href='/music'">
           music
       </el-button>
     </ul>

@@ -12,10 +12,12 @@ const state = {
     show_title: 'SHOW',
     bgm: [],
     playbgm: [],
-    audio: new Audio()
+    audio: new Audio(),
+    backStyle: "background-image: url('');data-stellar-background-ratio:'0.5'",
 }
 
 const getters = {
+    backStyle: state => state.backStyle,
     title: state => state.title,
     author: state => state.author,
     isload: state => state.isload,
@@ -32,9 +34,10 @@ const actions = {
         let data = state.bgm[index]['tracks'];
         commit('LOADED_TRACKS', { data })
     },
-    play: ({ commit }, id, audio) => {
-        console.log(id);
-        axios.get('/music/getDetail/' + id, {}, {
+    play: ({ commit }, value, audio) => {
+        console.log(value.album.blurPicUrl);
+        let backUrl = value.album.blurPicUrl;
+        axios.get('/music/getDetail/' + value.id, {}, {
             headers: {},
             emulateJSON: true
         }).then(res => {
@@ -42,6 +45,7 @@ const actions = {
             state.audio.src = res.data;
             state.audio.load();
             state.audio.play();
+            state.backStyle = "background: url('" + backUrl + "');";
 
         }).catch(function(res) {
             console.log('error');
