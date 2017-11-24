@@ -4,7 +4,7 @@ import axios from 'axios'
 // //
 
 const state = {
-    ids: [867822471, 150524989, 963404566, 398340443],
+    ids: [867822471, 150524989, 963404566],
     title: 'Music',
     author: "uercal",
     isload: false,
@@ -13,7 +13,7 @@ const state = {
     bgm: [],
     playbgm: [],
     audio: new Audio(),
-    backStyle: "background-image: url('')",
+    backStyle: "background-image: url('/images/1.jpg')",
 }
 
 const getters = {
@@ -30,13 +30,15 @@ const getters = {
 
 const actions = {
     Onbgm: ({ commit }, index) => {
-        console.log(index);
+        // console.log(index);
+        console.log(state.bgm);
         let data = state.bgm[index]['tracks'];
+        console.log(data);
         commit('LOADED_TRACKS', { data })
     },
     play: ({ commit }, value, audio) => {
-        console.log(value.album.blurPicUrl);
-        let backUrl = value.album.blurPicUrl;
+        console.log(value);
+        let backUrl = value.al.picUrl;
         axios.get('/music/getDetail/' + value.id, {}, {
             headers: {},
             emulateJSON: true
@@ -68,9 +70,9 @@ const actions = {
             axios.get('/music/getTracks?list_id=' + i).then(res => {
                 console.log(res);
                 data.push({
-                    title: res.data.result.name,
-                    src: res.data.result.coverImgUrl,
-                    tracks: res.data.result.tracks
+                    title: res.data.playlist.name,
+                    src: res.data.playlist.coverImgUrl,
+                    tracks: res.data.playlist.tracks
                 });
             }).catch(function(err) {
                 console.log(err)

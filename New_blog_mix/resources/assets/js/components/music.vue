@@ -1,16 +1,15 @@
 <template>
-  <div id="secondcomponent" style="position:relative;">
+  <div id="secondcomponent" style="position:relative;">    
     <div>
     <el-button @click="back" style="position:relative;float:left;">←</el-button>
-    <br>
+    <div id="player" class="aplayer"></div>
+    <br>    
     <h1>{{title}}</h1>        
     <a> written by {{ author }} </a>
     <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>    
     <el-button @click="showBgm">{{ show_title }}</el-button>
     <transition name="slide-fade">
-    <el-card class="box-card" v-show="isload">      
-      <div id="player" class="aplayer"></div>
-      <br>
+    <el-card class="box-card" v-show="isload">                  
       <br>
       <li v-for='(value,index) in bgm'>
         <img :src="value.src" class="avatar" style="height:100px" :title="value.title" @click="Onbgm(index)"></img>
@@ -144,6 +143,13 @@ a {
   left: 0;  
   opacity: 0.5;
   z-index:-1;
+}
+#player{
+  width:20%;
+  position:fixed;
+  right:2%;
+  
+  z-index:1;
 }
 </style>
 
