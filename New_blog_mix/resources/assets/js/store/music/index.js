@@ -4,7 +4,7 @@ import axios from 'axios'
 // //
 
 const state = {
-    ids: [867822471, 150524989, 963404566],
+    ids: [867822471, 150524989, 963404566, 398340443],
     title: 'Music',
     author: "uercal",
     isload: false,
@@ -42,10 +42,16 @@ const actions = {
             emulateJSON: true
         }).then(res => {
             // console.log(res.data);
-            state.audio.src = res.data;
-            state.audio.load();
-            state.audio.play();
-            state.backStyle = "background: url('"+backUrl+"');";
+            // state.audio.src = res.data;
+            // state.audio.load();
+            // state.audio.play();
+            state.audio.audio.src = res.data;
+            state.audio.element.children[0].firstChild.src = backUrl;
+            state.audio.audio.load();
+            state.audio.audio.play();
+            console.log(state.audio);
+
+            state.backStyle = "background: url('" + backUrl + "');";
 
         }).catch(function(res) {
             console.log('error');

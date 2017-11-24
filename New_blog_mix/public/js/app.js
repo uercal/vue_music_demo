@@ -382,318 +382,8 @@ function deepMerge(target, source) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-var bind = __webpack_require__(49);
-var isBuffer = __webpack_require__(88);
-
-/*global toString:true*/
-
-// utils is a library of generic helper functions non-specific to axios
-
-var toString = Object.prototype.toString;
-
-/**
- * Determine if a value is an Array
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Array, otherwise false
- */
-function isArray(val) {
-  return toString.call(val) === '[object Array]';
-}
-
-/**
- * Determine if a value is an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an ArrayBuffer, otherwise false
- */
-function isArrayBuffer(val) {
-  return toString.call(val) === '[object ArrayBuffer]';
-}
-
-/**
- * Determine if a value is a FormData
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an FormData, otherwise false
- */
-function isFormData(val) {
-  return (typeof FormData !== 'undefined') && (val instanceof FormData);
-}
-
-/**
- * Determine if a value is a view on an ArrayBuffer
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
- */
-function isArrayBufferView(val) {
-  var result;
-  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
-    result = ArrayBuffer.isView(val);
-  } else {
-    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
-  }
-  return result;
-}
-
-/**
- * Determine if a value is a String
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a String, otherwise false
- */
-function isString(val) {
-  return typeof val === 'string';
-}
-
-/**
- * Determine if a value is a Number
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Number, otherwise false
- */
-function isNumber(val) {
-  return typeof val === 'number';
-}
-
-/**
- * Determine if a value is undefined
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if the value is undefined, otherwise false
- */
-function isUndefined(val) {
-  return typeof val === 'undefined';
-}
-
-/**
- * Determine if a value is an Object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is an Object, otherwise false
- */
-function isObject(val) {
-  return val !== null && typeof val === 'object';
-}
-
-/**
- * Determine if a value is a Date
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Date, otherwise false
- */
-function isDate(val) {
-  return toString.call(val) === '[object Date]';
-}
-
-/**
- * Determine if a value is a File
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a File, otherwise false
- */
-function isFile(val) {
-  return toString.call(val) === '[object File]';
-}
-
-/**
- * Determine if a value is a Blob
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Blob, otherwise false
- */
-function isBlob(val) {
-  return toString.call(val) === '[object Blob]';
-}
-
-/**
- * Determine if a value is a Function
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Function, otherwise false
- */
-function isFunction(val) {
-  return toString.call(val) === '[object Function]';
-}
-
-/**
- * Determine if a value is a Stream
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a Stream, otherwise false
- */
-function isStream(val) {
-  return isObject(val) && isFunction(val.pipe);
-}
-
-/**
- * Determine if a value is a URLSearchParams object
- *
- * @param {Object} val The value to test
- * @returns {boolean} True if value is a URLSearchParams object, otherwise false
- */
-function isURLSearchParams(val) {
-  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
-}
-
-/**
- * Trim excess whitespace off the beginning and end of a string
- *
- * @param {String} str The String to trim
- * @returns {String} The String freed of excess whitespace
- */
-function trim(str) {
-  return str.replace(/^\s*/, '').replace(/\s*$/, '');
-}
-
-/**
- * Determine if we're running in a standard browser environment
- *
- * This allows axios to run in a web worker, and react-native.
- * Both environments support XMLHttpRequest, but not fully standard globals.
- *
- * web workers:
- *  typeof window -> undefined
- *  typeof document -> undefined
- *
- * react-native:
- *  navigator.product -> 'ReactNative'
- */
-function isStandardBrowserEnv() {
-  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
-    return false;
-  }
-  return (
-    typeof window !== 'undefined' &&
-    typeof document !== 'undefined'
-  );
-}
-
-/**
- * Iterate over an Array or an Object invoking a function for each item.
- *
- * If `obj` is an Array callback will be called passing
- * the value, index, and complete array for each item.
- *
- * If 'obj' is an Object callback will be called passing
- * the value, key, and complete object for each property.
- *
- * @param {Object|Array} obj The object to iterate
- * @param {Function} fn The callback to invoke for each item
- */
-function forEach(obj, fn) {
-  // Don't bother if no value provided
-  if (obj === null || typeof obj === 'undefined') {
-    return;
-  }
-
-  // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
-    /*eslint no-param-reassign:0*/
-    obj = [obj];
-  }
-
-  if (isArray(obj)) {
-    // Iterate over array values
-    for (var i = 0, l = obj.length; i < l; i++) {
-      fn.call(null, obj[i], i, obj);
-    }
-  } else {
-    // Iterate over object keys
-    for (var key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        fn.call(null, obj[key], key, obj);
-      }
-    }
-  }
-}
-
-/**
- * Accepts varargs expecting each argument to be an object, then
- * immutably merges the properties of each object and returns result.
- *
- * When multiple objects contain the same key the later object in
- * the arguments list will take precedence.
- *
- * Example:
- *
- * ```js
- * var result = merge({foo: 123}, {foo: 456});
- * console.log(result.foo); // outputs 456
- * ```
- *
- * @param {Object} obj1 Object to merge
- * @returns {Object} Result of all merge properties
- */
-function merge(/* obj1, obj2, obj3, ... */) {
-  var result = {};
-  function assignValue(val, key) {
-    if (typeof result[key] === 'object' && typeof val === 'object') {
-      result[key] = merge(result[key], val);
-    } else {
-      result[key] = val;
-    }
-  }
-
-  for (var i = 0, l = arguments.length; i < l; i++) {
-    forEach(arguments[i], assignValue);
-  }
-  return result;
-}
-
-/**
- * Extends object a by mutably adding to it the properties of object b.
- *
- * @param {Object} a The object to be extended
- * @param {Object} b The object to copy properties from
- * @param {Object} thisArg The object to bind function to
- * @return {Object} The resulting value of object a
- */
-function extend(a, b, thisArg) {
-  forEach(b, function assignValue(val, key) {
-    if (thisArg && typeof val === 'function') {
-      a[key] = bind(val, thisArg);
-    } else {
-      a[key] = val;
-    }
-  });
-  return a;
-}
-
-module.exports = {
-  isArray: isArray,
-  isArrayBuffer: isArrayBuffer,
-  isBuffer: isBuffer,
-  isFormData: isFormData,
-  isArrayBufferView: isArrayBufferView,
-  isString: isString,
-  isNumber: isNumber,
-  isObject: isObject,
-  isUndefined: isUndefined,
-  isDate: isDate,
-  isFile: isFile,
-  isBlob: isBlob,
-  isFunction: isFunction,
-  isStream: isStream,
-  isURLSearchParams: isURLSearchParams,
-  isStandardBrowserEnv: isStandardBrowserEnv,
-  forEach: forEach,
-  merge: merge,
-  extend: extend,
-  trim: trim
-};
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.5.7
+ * Vue.js v2.5.8
  * (c) 2014-2017 Evan You
  * Released under the MIT License.
  */
@@ -5667,7 +5357,7 @@ Object.defineProperty(Vue$3.prototype, '$ssrContext', {
   }
 });
 
-Vue$3.version = '2.5.7';
+Vue$3.version = '2.5.8';
 
 /*  */
 
@@ -11075,7 +10765,7 @@ function checkIdentifier (
 ) {
   if (typeof ident === 'string') {
     try {
-      new Function(("var " + ident));
+      new Function(("var " + ident + "=_"));
     } catch (e) {
       errors.push(("invalid " + type + " \"" + ident + "\" in expression: " + (text.trim())));
     }
@@ -11387,6 +11077,316 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25), __webpack_require__(105).setImmediate))
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bind = __webpack_require__(49);
+var isBuffer = __webpack_require__(88);
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object' && !isArray(obj)) {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11403,7 +11403,7 @@ exports.addClass = addClass;
 exports.removeClass = removeClass;
 exports.setStyle = setStyle;
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -12099,7 +12099,7 @@ module.exports = g;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var normalizeHeaderName = __webpack_require__(90);
 
 var DEFAULT_CONTENT_TYPE = {
@@ -12288,7 +12288,7 @@ var _zhCN = __webpack_require__(125);
 
 var _zhCN2 = _interopRequireDefault(_zhCN);
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -13052,7 +13052,7 @@ exports.default = function (target) {
 
 exports.__esModule = true;
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -13268,7 +13268,7 @@ exports.default = function () {
   return scrollBarWidth;
 };
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -13913,7 +13913,7 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var settle = __webpack_require__(91);
 var buildURL = __webpack_require__(93);
 var parseHeaders = __webpack_require__(94);
@@ -15529,7 +15529,7 @@ exports.default = {
 exports.__esModule = true;
 exports.PopupManager = undefined;
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -15922,7 +15922,7 @@ module.exports = function ( delay, noTrailing, callback, debounceMode ) {
 
 exports.__esModule = true;
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -16803,7 +16803,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 exports.__esModule = true;
 exports.default = scrollIntoView;
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -17138,7 +17138,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 __webpack_require__(82);
 
-window.Vue = __webpack_require__(3);
+window.Vue = __webpack_require__(2);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17162,6 +17162,9 @@ Vue.component('music', __webpack_require__(57));
 
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_3_element_ui___default.a);
+
+//
+
 
 var app = new Vue({
   el: '#app',
@@ -46996,7 +46999,7 @@ if (typeof jQuery === 'undefined') {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var bind = __webpack_require__(49);
 var Axios = __webpack_require__(89);
 var defaults = __webpack_require__(26);
@@ -47083,7 +47086,7 @@ function isSlowBuffer (obj) {
 
 
 var defaults = __webpack_require__(26);
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var InterceptorManager = __webpack_require__(98);
 var dispatchRequest = __webpack_require__(99);
 var isAbsoluteURL = __webpack_require__(101);
@@ -47175,7 +47178,7 @@ module.exports = Axios;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -47255,7 +47258,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -47330,7 +47333,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 /**
  * Parse headers into an object
@@ -47374,7 +47377,7 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -47492,7 +47495,7 @@ module.exports = btoa;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -47552,7 +47555,7 @@ module.exports = (
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -47611,7 +47614,7 @@ module.exports = InterceptorManager;
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 var transformData = __webpack_require__(100);
 var isCancel = __webpack_require__(53);
 var defaults = __webpack_require__(26);
@@ -47697,7 +47700,7 @@ module.exports = function dispatchRequest(config) {
 "use strict";
 
 
-var utils = __webpack_require__(2);
+var utils = __webpack_require__(3);
 
 /**
  * Transform the data for a request or a response
@@ -48223,7 +48226,7 @@ var render = function() {
       [
         _c(
           "el-button",
-          { attrs: { onclick: "window.location.href='/music'" } },
+          { attrs: { onclick: "window.location.href='/chat'" } },
           [_vm._v("\n      chat\n    ")]
         )
       ],
@@ -48235,7 +48238,7 @@ var render = function() {
       [
         _c(
           "el-button",
-          { attrs: { onclick: "window.location.href='/second'" } },
+          { attrs: { onclick: "window.location.href='/music'" } },
           [_vm._v("\n        music\n    ")]
         )
       ],
@@ -48291,10 +48294,10 @@ if(false) {
 
 exports = module.exports = __webpack_require__(27)(undefined);
 // imports
-
+exports.i(__webpack_require__(219), "");
 
 // module
-exports.push([module.i, "\n.slide-fade-enter-active {\r\n  -webkit-transition: all .3s ease;\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\r\n  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active for below version 2.1.8 */ {\r\n  -webkit-transform: translateX(10px);\r\n          transform: translateX(10px);\r\n  opacity: 0;\n}\n.box-card .avatar{\r\n  cursor:pointer;\n}\n#secondcomponent {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: center;\r\n  color: #2c3e50;\r\n  margin-top: 0px;\n}\nh1, h2 {\r\n  font-weight: normal;\n}\nul {\r\n  list-style-type: none;\r\n  padding: 0;\n}\nli {\r\n  display: inline-block;\r\n  margin: 0 10px;\n}\na {\r\n  color: #42b983;\n}\r\n", ""]);
+exports.push([module.i, "\n.slide-fade-enter-active {\r\n  -webkit-transition: all .3s ease;\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\r\n  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active for below version 2.1.8 */ {\r\n  -webkit-transform: translateX(10px);\r\n          transform: translateX(10px);\r\n  opacity: 0;\n}\n.box-card .avatar{\r\n  cursor:pointer;\n}\n#secondcomponent {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: center;\r\n  color: #2c3e50;\r\n  margin-top: 0px;\n}\nh1, h2 {\r\n  font-weight: normal;\n}\nul {\r\n  list-style-type: none;\r\n  padding: 0;\n}\nli {\r\n  display: inline-block;\r\n  margin: 0 10px;\n}\na {\r\n  color: #42b983;\n}\n.el-card{\r\n  background-color:#000000;\r\n  background-color:rgba(0,0,0,0);\r\n  border:0;\r\n  box-shadow: 0 2px 12px 0 rgba(0,0,0,0);\r\n  -webkit-box-shadow:0;\n}\n.el-button {\r\n  background-color:#000000;\r\n  background-color:rgba(0,0,0,0.2);\r\n  border: 0; \r\n  //padding:0;\n}\n#back{\r\n  content: '';\r\n  display: block;\r\n  width: 100%;\r\n  height: 100%;\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  left: 0;  \r\n  opacity: 0.5;\r\n  z-index:-1;\n}\r\n", ""]);
 
 // exports
 
@@ -48305,7 +48308,8 @@ exports.push([module.i, "\n.slide-fade-enter-active {\r\n  -webkit-transition: a
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__static_APlayer_min__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(58);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -48332,19 +48336,40 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['title', 'author', 'playbgm', 'isload', 'isshow', 'bgm', 'audio', 'show_title']),
-  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapActions */])(['Onbgm', 'showBgm', 'play']), {
+  computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])(['backStyle', 'title', 'author', 'playbgm', 'isload', 'isshow', 'bgm', 'audio', 'show_title']),
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['Onbgm', 'showBgm', 'play']), {
     back: function back() {
       window.location.href = '/';
     }
   }),
   mounted: function mounted() {
-    // console.log(this.$el.querySelector('#audio'));
-    this.$store.dispatch('getBgm', { audio: this.$el.querySelector('#audio') });
+
+    var ap1 = new __WEBPACK_IMPORTED_MODULE_0__static_APlayer_min__["a" /* default */]({
+      element: document.getElementById('player'),
+      narrow: false,
+      autoplay: false,
+      showlrc: false,
+      music: {
+        title: 'Preparation',
+        author: 'Hans Zimmer/Richard Harvey',
+        url: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.mp3',
+        pic: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.jpg'
+      }
+    });
+    ap1.init();
+
+    // console.log(this.$el.querySelector('#audio'));    
+    console.log(ap1);
+    this.$store.dispatch('getBgm', { audio: ap1 });
   }
 });
 
@@ -48358,100 +48383,108 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "secondcomponent" } },
+    { staticStyle: { position: "relative" }, attrs: { id: "secondcomponent" } },
     [
       _c(
-        "el-button",
-        {
-          staticStyle: { position: "relative", float: "left" },
-          on: { click: _vm.back }
-        },
-        [_vm._v("←")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("h1", [_vm._v(_vm._s(_vm.title))]),
-      _vm._v(" "),
-      _c("a", [_vm._v(" written by " + _vm._s(_vm.author) + " ")]),
-      _vm._v(" "),
-      _vm._m(0, false, false),
-      _vm._v(" "),
-      _c("el-button", { on: { click: _vm.showBgm } }, [
-        _vm._v(_vm._s(_vm.show_title))
-      ]),
-      _vm._v(" "),
-      _c(
-        "transition",
-        { attrs: { name: "slide-fade" } },
+        "div",
         [
           _c(
-            "el-card",
+            "el-button",
             {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isload,
-                  expression: "isload"
-                }
-              ],
-              staticClass: "box-card"
+              staticStyle: { position: "relative", float: "left" },
+              on: { click: _vm.back }
             },
+            [_vm._v("←")]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("h1", [_vm._v(_vm._s(_vm.title))]),
+          _vm._v(" "),
+          _c("a", [_vm._v(" written by " + _vm._s(_vm.author) + " ")]),
+          _vm._v(" "),
+          _vm._m(0, false, false),
+          _vm._v(" "),
+          _c("el-button", { on: { click: _vm.showBgm } }, [
+            _vm._v(_vm._s(_vm.show_title))
+          ]),
+          _vm._v(" "),
+          _c(
+            "transition",
+            { attrs: { name: "slide-fade" } },
             [
-              _c("audio", {
-                attrs: { id: "audio", src: "", controls: "controls" }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _vm._l(_vm.bgm, function(value, index) {
-                return _c("li", [
-                  _c("img", {
-                    staticClass: "avatar",
-                    staticStyle: { height: "100px" },
-                    attrs: { src: value.src, title: value.title },
-                    on: {
-                      click: function($event) {
-                        _vm.Onbgm(index)
-                      }
+              _c(
+                "el-card",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isload,
+                      expression: "isload"
                     }
+                  ],
+                  staticClass: "box-card"
+                },
+                [
+                  _c("div", {
+                    staticClass: "aplayer",
+                    attrs: { id: "player" }
+                  }),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _vm._l(_vm.bgm, function(value, index) {
+                    return _c("li", [
+                      _c("img", {
+                        staticClass: "avatar",
+                        staticStyle: { height: "100px" },
+                        attrs: { src: value.src, title: value.title },
+                        on: {
+                          click: function($event) {
+                            _vm.Onbgm(index)
+                          }
+                        }
+                      })
+                    ])
                   })
-                ])
-              })
+                ],
+                2
+              )
             ],
-            2
-          )
+            1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.playbgm, function(value) {
+            return _vm.isshow
+              ? _c(
+                  "ul",
+                  [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { href: "javascript:;" },
+                        on: {
+                          click: function($event) {
+                            _vm.play(value)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(value.name))]
+                    )
+                  ],
+                  1
+                )
+              : _vm._e()
+          })
         ],
-        1
+        2
       ),
       _vm._v(" "),
-      _vm._l(_vm.playbgm, function(value) {
-        return _vm.isshow
-          ? _c(
-              "ul",
-              [
-                _c(
-                  "el-button",
-                  {
-                    attrs: { href: "javascript:;" },
-                    on: {
-                      click: function($event) {
-                        _vm.play(value.id)
-                      }
-                    }
-                  },
-                  [_vm._v(_vm._s(value.name))]
-                )
-              ],
-              1
-            )
-          : _vm._e()
-      })
-    ],
-    2
+      _c("div", { style: _vm.backStyle, attrs: { id: "back" } })
+    ]
   )
 }
 var staticRenderFns = [
@@ -48481,7 +48514,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(118);
 
@@ -51231,7 +51264,7 @@ if (false) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(58);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__music_index__ = __webpack_require__(123);
@@ -51274,7 +51307,7 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
 // //
 
 var state = {
-    ids: [867822471, 150524989, 963404566],
+    ids: [867822471, 150524989, 963404566, 398340443],
     title: 'Music',
     author: "uercal",
     isload: false,
@@ -51282,10 +51315,14 @@ var state = {
     show_title: 'SHOW',
     bgm: [],
     playbgm: [],
-    audio: new Audio()
+    audio: new Audio(),
+    backStyle: "background-image: url('')"
 };
 
 var getters = {
+    backStyle: function backStyle(state) {
+        return state.backStyle;
+    },
     title: function title(state) {
         return state.title;
     },
@@ -51320,18 +51357,26 @@ var actions = {
         var data = state.bgm[index]['tracks'];
         commit('LOADED_TRACKS', { data: data });
     },
-    play: function play(_ref2, id, audio) {
+    play: function play(_ref2, value, audio) {
         var commit = _ref2.commit;
 
-        console.log(id);
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/music/getDetail/' + id, {}, {
+        console.log(value.album.blurPicUrl);
+        var backUrl = value.album.blurPicUrl;
+        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/music/getDetail/' + value.id, {}, {
             headers: {},
             emulateJSON: true
         }).then(function (res) {
             // console.log(res.data);
-            state.audio.src = res.data;
-            state.audio.load();
-            state.audio.play();
+            // state.audio.src = res.data;
+            // state.audio.load();
+            // state.audio.play();
+            state.audio.audio.src = res.data;
+            state.audio.element.children[0].firstChild.src = backUrl;
+            state.audio.audio.load();
+            state.audio.audio.play();
+            console.log(state.audio);
+
+            state.backStyle = "background: url('" + backUrl + "');";
         }).catch(function (res) {
             console.log('error');
             console.log(res);
@@ -51621,7 +51666,7 @@ module.exports = __webpack_require__(4);
 /* 5 */
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(2);
 
 /***/ }),
 /* 6 */
@@ -81948,7 +81993,7 @@ var RE_NARGS = /(%|)\{([0-9a-zA-Z_]+)\}/g;
 
 exports.__esModule = true;
 
-var _vue = __webpack_require__(3);
+var _vue = __webpack_require__(2);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -84703,7 +84748,7 @@ exports.default = {
 /***/ 5:
 /***/ (function(module, exports) {
 
-module.exports = __webpack_require__(3);
+module.exports = __webpack_require__(2);
 
 /***/ }),
 
@@ -91452,6 +91497,167 @@ module.exports = function (css) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/aplayer-fontello.eot?b373f0b01100e77782f5f698537a51b7";
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(27)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "@font-face{font-family:aplayer-fontello;src:url(" + __webpack_require__(218) + ");src:url(" + __webpack_require__(218) + "#iefix) format(\"embedded-opentype\"),url(" + __webpack_require__(220) + ") format(\"woff\"),url(" + __webpack_require__(221) + ") format(\"truetype\"),url(" + __webpack_require__(222) + "#fontello) format(\"svg\");font-weight:400;font-style:normal}.aplayer-narrow{width:66px}.aplayer-narrow .aplayer-info{display:none}.aplayer-withlrc.aplayer-narrow{width:106px}.aplayer-withlrc.aplayer .aplayer-pic{height:106px;width:106px}.aplayer-withlrc.aplayer .aplayer-info{margin-left:106px;height:106px}.aplayer-withlrc.aplayer .aplayer-lrc{display:block}.aplayer{font-family:Arial,Helvetica,sans-serif;margin:5px;-webkit-box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);box-shadow:0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.2),0 1px 5px 0 rgba(0,0,0,.12);-webkit-border-radius:2px;border-radius:2px;overflow:hidden;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.aplayer [class*=\" aplayer-icon-\"]:before,.aplayer [class^=aplayer-icon-]:before{font-family:aplayer-fontello;font-style:normal;font-weight:400;display:inline-block;text-decoration:inherit;width:1em;text-align:center;font-variant:normal;text-transform:none;line-height:1em}.aplayer .aplayer-lrc-content,.aplayer .aplayer-pic .aplayer-hide{display:none}.aplayer .aplayer-icon-weibo:before{content:'\\E805'}.aplayer .aplayer-icon-play:before{content:'\\E806'}.aplayer .aplayer-icon-pause:before{content:'\\E807'}.aplayer .aplayer-icon-to-start:before{content:'\\E808'}.aplayer .aplayer-icon-to-end:before{content:'\\E809'}.aplayer .aplayer-icon-list:before{content:'\\E80A'}.aplayer .aplayer-icon-menu:before{content:'\\E80B'}.aplayer .aplayer-icon-volume-off:before{content:'\\E800'}.aplayer .aplayer-icon-volume-down:before{content:'\\E801'}.aplayer .aplayer-icon-volume-up:before{content:'\\E802'}.aplayer span{cursor:default!important}.aplayer .aplayer-pic{position:relative;float:left;height:66px;width:66px}.aplayer .aplayer-pic img{height:100%;width:100%}.aplayer .aplayer-pic .aplayer-button{position:absolute;color:#fff;-webkit-border-radius:50%;border-radius:50%;opacity:.8;cursor:pointer;text-shadow:0 1px 1px rgba(0,0,0,.2);-webkit-box-shadow:0 1px 1px rgba(0,0,0,.2);box-shadow:0 1px 1px rgba(0,0,0,.2);background:rgba(0,0,0,.2)}.aplayer .aplayer-pic .aplayer-button:hover{opacity:1}.aplayer .aplayer-pic .aplayer-play{width:26px;height:26px;border:2px solid #fff;top:50%;left:50%;margin:-15px 0 0 -15px}.aplayer .aplayer-pic .aplayer-play .aplayer-icon-play{position:absolute;top:2px;left:4px;font-size:20px;line-height:23px}.aplayer .aplayer-pic .aplayer-pause{width:16px;height:16px;border:2px solid #fff;bottom:4px;right:4px}.aplayer .aplayer-pic .aplayer-pause .aplayer-icon-pause{position:absolute;top:1px;left:2px;font-size:12px;line-height:14px}.aplayer .aplayer-info{margin-left:66px;padding:14px 7px 0 10px;height:66px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}.aplayer .aplayer-info .aplayer-music{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin-bottom:17px}.aplayer .aplayer-info .aplayer-music .aplayer-title{font-size:14px}.aplayer .aplayer-info .aplayer-music .aplayer-author{font-size:12px;color:#666}.aplayer .aplayer-info .aplayer-controller{position:relative}.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap{margin:0 120px 0 5px}.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar{position:relative;height:2px;width:100%;background:#cdcdcd;cursor:pointer!important}.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-loaded{position:absolute;left:0;top:0;bottom:0;background:#aaa;height:2px;-webkit-transition:all .5s ease;transition:all .5s ease}.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played{position:absolute;left:0;top:0;bottom:0;background:#b7daff;height:2px}.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb{position:absolute;top:0;right:5px;margin-top:-4px;margin-right:-10px;height:8px;width:8px;border:1px solid #b7daff;-webkit-border-radius:50%;border-radius:50%;background:#fff;cursor:pointer!important}.aplayer .aplayer-info .aplayer-controller .aplayer-bar-wrap .aplayer-bar .aplayer-played .aplayer-thumb:hover{background:#b7daff}.aplayer .aplayer-info .aplayer-controller .aplayer-time{position:absolute;right:0;bottom:-5px;height:17px;color:#999;font-size:11px}.aplayer .aplayer-info .aplayer-controller .aplayer-time i{color:#666;font-size:15px}.aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap{display:inline-block;margin-left:7px;cursor:pointer!important}.aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap:hover .aplayer-volume-bar-wrap{display:block}.aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap .aplayer-volume-bar-wrap{display:none;position:absolute;bottom:17px;right:-5px;width:25px;height:40px;z-index:99}.aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap .aplayer-volume-bar-wrap .aplayer-volume-bar{position:absolute;bottom:0;right:10px;width:5px;height:35px;background:#aaa}.aplayer .aplayer-info .aplayer-controller .aplayer-volume-wrap .aplayer-volume-bar-wrap .aplayer-volume-bar .aplayer-volume{position:absolute;bottom:0;right:0;width:5px;background:#b7daff}.aplayer .aplayer-lrc{display:none;position:relative;height:40px;background:#fff;text-align:center;overflow:hidden;margin:-10px 0 10px}.aplayer .aplayer-lrc:after,.aplayer .aplayer-lrc:before{position:absolute;z-index:1;display:block;overflow:hidden;content:' ';width:100%}.aplayer .aplayer-lrc:before{top:0;height:10%;background:-webkit-linear-gradient(top,#fff 0,rgba(255,255,255,0) 100%);background:-webkit-gradient(linear,left top,left bottom,from(white),to(rgba(255,255,255,0)));background:linear-gradient(to bottom,#fff 0,rgba(255,255,255,0) 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff', GradientType=0 )}.aplayer .aplayer-lrc:after{bottom:0;height:33%;background:-webkit-linear-gradient(bottom,#fff 0,rgba(255,255,255,0) 100%);background:-webkit-gradient(linear,left bottom,left top,from(white),to(rgba(255,255,255,0)));background:linear-gradient(to top,#fff 0,rgba(255,255,255,0) 100%);filter:progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff', GradientType=0 )}.aplayer .aplayer-lrc p{font-size:12px;color:#666;line-height:20px;padding:0;margin:0;-webkit-transition:all .5s ease-out;transition:all .5s ease-out;opacity:.4}.aplayer .aplayer-lrc p.aplayer-lrc-current{opacity:1}.aplayer .aplayer-lrc .aplayer-lrc-contents{width:100%;-webkit-transition:all .5s ease-out;transition:all .5s ease-out}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/aplayer-fontello.woff?ea8264f3403d1c18e62f4702def1dba4";
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/aplayer-fontello.ttf?c29f74c60f390a9aa1e57c88b50cf4d9";
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports) {
+
+module.exports = "/fonts/aplayer-fontello.svg?064349c9f4f6407a88da2a7eba6486c5";
+
+/***/ }),
+/* 223 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+function APlayer(e) {
+    if (!("music" in e && "title" in e.music && "author" in e.music && "url" in e.music && "pic" in e.music)) throw "APlayer Error: Music, music.title, music.author, music.url, music.pic are required in options";
+    if (null === e.element) throw "APlayer Error: element option null";
+    this.isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i), this.isMobile && (e.autoplay = !1);
+    var a = { element: document.getElementsByClassName("aplayer")[0], narrow: !1, autoplay: !1, showlrc: !1 };
+    for (var t in a) {
+        a.hasOwnProperty(t) && !e.hasOwnProperty(t) && (e[t] = a[t]);
+    }this.option = e;
+}
+APlayer.prototype.init = function () {
+    function e(e) {
+        var a = e || window.event,
+            i = (a.clientX - t(m.bar)) / p;
+        i = i > 0 ? i : 0, i = 1 > i ? i : 1, m.updateBar.call(m, "played", i, "width"), m.option.showlrc && m.updateLrc.call(m, parseFloat(m.playedBar.style.width) / 100 * m.audio.duration), m.element.getElementsByClassName("aplayer-ptime")[0].innerHTML = m.secondToTime(i * m.audio.duration);
+    }
+
+    function a() {
+        document.removeEventListener("mouseup", a), document.removeEventListener("mousemove", e), m.audio.currentTime = parseFloat(m.playedBar.style.width) / 100 * m.audio.duration, m.play();
+    }
+
+    function t(e) {
+        for (var a, t = e.offsetLeft, i = e.offsetParent; null !== i;) {
+            t += i.offsetLeft, i = i.offsetParent;
+        }return a = document.body.scrollLeft + document.documentElement.scrollLeft, t - a;
+    }
+
+    function i(e) {
+        for (var a, t = e.offsetTop, i = e.offsetParent; null !== i;) {
+            t += i.offsetTop, i = i.offsetParent;
+        }return a = document.body.scrollTop + document.documentElement.scrollTop, t - a;
+    }
+    if (this.element = this.option.element, this.music = this.option.music, this.option.showlrc) {
+        this.lrcTime = [], this.lrcLine = [];
+        for (var l = this.element.getElementsByClassName("aplayer-lrc-content")[0].innerHTML, s = l.split(/\n/), n = /\[(\d{2}):(\d{2})\.(\d{2})]/, r = /](.*)$/, o = 0; o < s.length; o++) {
+            var d = n.exec(s[o]),
+                c = r.exec(s[o]);
+            d && c && (this.lrcTime.push(60 * parseInt(d[1]) + parseInt(d[2]) + parseInt(d[3]) / 100), this.lrcLine.push(c[1]));
+        }
+    }
+    if (this.element.innerHTML = '<div class="aplayer-pic"><img src="' + this.music.pic + '"><div class="aplayer-button aplayer-pause aplayer-hide"><i class="demo-icon aplayer-icon-pause"></i></div><div class="aplayer-button aplayer-play"><i class="demo-icon aplayer-icon-play"></i></div></div><div class="aplayer-info"><div class="aplayer-music"><span class="aplayer-title">' + this.music.title + '</span><span class="aplayer-author"> - (＞﹏＜)加载中,好累的说...</span></div><div class="aplayer-lrc"><div class="aplayer-lrc-contents" style="transform: translateY(0);"></div></div><div class="aplayer-controller"><div class="aplayer-bar-wrap"><div class="aplayer-bar"><div class="aplayer-loaded" style="width: 0"></div><div class="aplayer-played" style="width: 0"><span class="aplayer-thumb"></span></div></div></div><div class="aplayer-time"><span class="aplayer-ptime">00:00</span> / <span class="aplayer-dtime">(oﾟ▽ﾟ)</span><div class="aplayer-volume-wrap"><i class="demo-icon aplayer-icon-volume-down"></i><div class="aplayer-volume-bar-wrap"><div class="aplayer-volume-bar"><div class="aplayer-volume" style="height: 80%"></div></div></div></div></div></div></div>', this.option.showlrc) {
+        this.element.classList.add("aplayer-withlrc");
+        var u = "";
+        for (this.lrcContents = this.element.getElementsByClassName("aplayer-lrc-contents")[0], o = 0; o < this.lrcLine.length; o++) {
+            u += "<p>" + this.lrcLine[o] + "</p>";
+        }this.lrcContents.innerHTML = u, this.lrcIndex = 0, this.lrcContents.getElementsByTagName("p")[0].classList.add("aplayer-lrc-current");
+    }
+    this.option.narrow && this.element.classList.add("aplayer-narrow"), this.audio = document.createElement("audio"), this.audio.src = this.music.url, this.audio.loop = !0, this.audio.preload = "metadata";
+    var m = this;
+    this.audio.addEventListener("durationchange", function () {
+        1 !== m.audio.duration && (m.element.getElementsByClassName("aplayer-dtime")[0].innerHTML = m.secondToTime(m.audio.duration));
+    }), this.audio.addEventListener("loadedmetadata", function () {
+        m.element.getElementsByClassName("aplayer-author")[0].innerHTML = " - " + m.music.author, m.loadedTime = setInterval(function () {
+            var e = m.audio.buffered.end(m.audio.buffered.length - 1) / m.audio.duration;
+            m.updateBar.call(m, "loaded", e, "width"), 1 === e && clearInterval(m.loadedTime);
+        }, 500);
+    }), this.audio.addEventListener("error", function () {
+        m.element.getElementsByClassName("aplayer-author")[0].innerHTML = " - 加载失败 ╥﹏╥";
+    }), this.playButton = this.element.getElementsByClassName("aplayer-play")[0], this.pauseButton = this.element.getElementsByClassName("aplayer-pause")[0], this.playButton.addEventListener("click", function () {
+        m.play.call(m);
+    }), this.pauseButton.addEventListener("click", function () {
+        m.pause.call(m);
+    }), this.playedBar = this.element.getElementsByClassName("aplayer-played")[0], this.loadedBar = this.element.getElementsByClassName("aplayer-loaded")[0], this.thumb = this.element.getElementsByClassName("aplayer-thumb")[0], this.bar = this.element.getElementsByClassName("aplayer-bar")[0];
+    var p;
+    this.bar.addEventListener("click", function (e) {
+        var a = e || window.event;
+        p = m.bar.clientWidth;
+        var i = (a.clientX - t(m.bar)) / p;
+        m.updateBar.call(m, "played", i, "width"), m.element.getElementsByClassName("aplayer-ptime")[0].innerHTML = m.secondToTime(i * m.audio.duration), m.audio.currentTime = parseFloat(m.playedBar.style.width) / 100 * m.audio.duration;
+    }), this.thumb.addEventListener("mousedown", function () {
+        p = m.bar.clientWidth, clearInterval(m.playedTime), document.addEventListener("mousemove", e), document.addEventListener("mouseup", a);
+    }), this.audio.volume = .8, this.volumeBar = this.element.getElementsByClassName("aplayer-volume")[0];
+    var y = this.element.getElementsByClassName("aplayer-volume-bar")[0],
+        h = m.element.getElementsByClassName("aplayer-time")[0].getElementsByTagName("i")[0],
+        v = 35;
+    this.element.getElementsByClassName("aplayer-volume-bar-wrap")[0].addEventListener("click", function (e) {
+        var a = e || window.event,
+            t = (v - a.clientY + i(y)) / v;
+        t = t > 0 ? t : 0, t = 1 > t ? t : 1, m.updateBar.call(m, "volume", t, "height"), m.audio.volume = t, m.audio.muted && (m.audio.muted = !1), 1 === t ? h.className = "demo-icon aplayer-icon-volume-up" : h.className = "demo-icon aplayer-icon-volume-down";
+    }), h.addEventListener("click", function () {
+        m.audio.muted ? (m.audio.muted = !1, h.className = 1 === m.audio.volume ? "demo-icon aplayer-icon-volume-up" : "demo-icon aplayer-icon-volume-down", m.updateBar.call(m, "volume", m.audio.volume, "height")) : (m.audio.muted = !0, h.className = "demo-icon aplayer-icon-volume-off", m.updateBar.call(m, "volume", 0, "height"));
+    }), this.option.autoplay && this.play();
+}, APlayer.prototype.play = function () {
+    this.playButton.classList.add("aplayer-hide"), this.pauseButton.classList.remove("aplayer-hide"), this.audio.play();
+    var e = this;
+    this.playedTime = setInterval(function () {
+        e.updateBar.call(e, "played", e.audio.currentTime / e.audio.duration, "width"), e.option.showlrc && e.updateLrc.call(e), e.element.getElementsByClassName("aplayer-ptime")[0].innerHTML = e.secondToTime(e.audio.currentTime);
+    }, 100);
+}, APlayer.prototype.pause = function () {
+    this.pauseButton.classList.add("aplayer-hide"), this.playButton.classList.remove("aplayer-hide"), this.audio.pause(), clearInterval(this.playedTime);
+}, APlayer.prototype.updateBar = function (e, a, t) {
+    a = a > 0 ? a : 0, a = 1 > a ? a : 1, this[e + "Bar"].style[t] = 100 * a + "%";
+}, APlayer.prototype.updateLrc = function (e) {
+    if (e || (e = this.audio.currentTime), e < this.lrcTime[this.lrcIndex] || e >= this.lrcTime[this.lrcIndex + 1]) for (var a = 0; a < this.lrcTime.length; a++) {
+        e >= this.lrcTime[a] && (!this.lrcTime[a + 1] || e < this.lrcTime[a + 1]) && (this.lrcIndex = a, this.lrcContents.style.transform = "translateY(" + 20 * -this.lrcIndex + "px)", this.lrcContents.getElementsByClassName("aplayer-lrc-current")[0].classList.remove("aplayer-lrc-current"), this.lrcContents.getElementsByTagName("p")[a].classList.add("aplayer-lrc-current"));
+    }
+}, APlayer.prototype.secondToTime = function (e) {
+    var a = function a(e) {
+        return 10 > e ? "0" + e : "" + e;
+    },
+        t = parseInt(e / 60),
+        i = parseInt(e - 60 * t);
+    return a(t) + ":" + a(i);
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (APlayer);
 
 /***/ })
 /******/ ]);

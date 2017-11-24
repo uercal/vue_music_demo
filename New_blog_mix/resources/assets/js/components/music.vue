@@ -8,8 +8,8 @@
     <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>    
     <el-button @click="showBgm">{{ show_title }}</el-button>
     <transition name="slide-fade">
-    <el-card class="box-card" v-show="isload">
-      <audio id="audio" src="" controls="controls"></audio>    
+    <el-card class="box-card" v-show="isload">      
+      <div id="player" class="aplayer"></div>
       <br>
       <br>
       <li v-for='(value,index) in bgm'>
@@ -26,6 +26,8 @@
 </template>
 
 <script>
+
+import APlayer from '../static/APlayer.min';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {  
@@ -52,13 +54,32 @@ export default {
     }
   },
   mounted(){
+   
+    var ap1 = new APlayer({
+      element: document.getElementById('player'),
+      narrow: false,
+      autoplay: false,
+      showlrc: false,
+      music: {
+          title: 'Preparation',
+          author: 'Hans Zimmer/Richard Harvey',
+          url: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.mp3',
+          pic: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.jpg'
+      }
+    });
+    ap1.init();      
+    
+    
     // console.log(this.$el.querySelector('#audio'));    
-    this.$store.dispatch('getBgm',{audio:this.$el.querySelector('#audio')});    
+    console.log(ap1);
+    this.$store.dispatch('getBgm',{audio:ap1});
   }
 }
 </script>
 
 <style>
+@import  '../static/APlayer.min.css';
+
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -101,6 +122,9 @@ a {
 .el-card{
   background-color:#000000;
   background-color:rgba(0,0,0,0);
+  border:0;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0);
+  -webkit-box-shadow:0;  
 }
 .el-button {
   background-color:#000000;
