@@ -48356,13 +48356,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     var ap1 = new __WEBPACK_IMPORTED_MODULE_0__static_APlayer_min__["a" /* default */]({
       element: document.getElementById('player'),
       narrow: false,
-      autoplay: false,
+      autoplay: true,
       showlrc: false,
       music: {
-        title: 'Preparation',
-        author: 'Hans Zimmer/Richard Harvey',
-        url: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.mp3',
-        pic: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.jpg'
+        title: '',
+        author: '',
+        url: '',
+        pic: '../images/1.jpg'
       }
     });
     ap1.init();

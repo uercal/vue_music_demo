@@ -58,13 +58,13 @@ export default {
     var ap1 = new APlayer({
       element: document.getElementById('player'),
       narrow: false,
-      autoplay: false,
+      autoplay: true,
       showlrc: false,
       music: {
-          title: 'Preparation',
-          author: 'Hans Zimmer/Richard Harvey',
-          url: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.mp3',
-          pic: 'http://7xifn9.com1.z0.glb.clouddn.com/Preparation.jpg'
+          title: '',
+          author: '',
+          url: '',
+          pic: '../images/1.jpg'
       }
     });
     ap1.init();      
