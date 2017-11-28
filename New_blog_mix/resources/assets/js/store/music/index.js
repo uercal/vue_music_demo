@@ -12,8 +12,8 @@ const state = {
     show_title: 'SHOW',
     bgm: [],
     playbgm: [],
-    audio: new Audio(),
-    backStyle: "background-image: url('/images/1.jpg')",
+    audio: null,
+    backStyle: "/images/1.jpg",
 }
 
 const getters = {
@@ -39,21 +39,22 @@ const actions = {
     play: ({ commit }, value, audio) => {
         console.log(value);
         let backUrl = value.al.picUrl;
+        // 获取歌词
+        axios.get('/music/getLyrics/' + value.id).then(res => {
+            let lrc = res.data.lrc.lyric;
+            state.audio.music.lrc = lrc;
+            state.audio.option.showlrc = 1;
+        })
         axios.get('/music/getDetail/' + value.id, {}, {
             headers: {},
             emulateJSON: true
         }).then(res => {
-            // console.log(res.data);
-            // state.audio.src = res.data;
-            // state.audio.load();
-            // state.audio.play();
+            console.log(state.audio);
             state.audio.audio.src = res.data;
             state.audio.element.children[0].firstChild.src = backUrl;
-            state.audio.audio.load();
-            state.audio.audio.play();
-            console.log(state.audio);
-
-            state.backStyle = "background: url('" + backUrl + "');";
+            state.backStyle = backUrl;
+            state.audio.pause();
+            state.audio.play();
 
         }).catch(function(res) {
             console.log('error');

@@ -31,10 +31,22 @@ class MusicController extends Controller
 
     
     public function getDetail($id){
-      return 'http://music.163.com/song/media/outer/url?id='.$id.'.mp3';
+        return 'http://music.163.com/song/media/outer/url?id='.$id.'.mp3';
     }
    
 
+    public function getLyrics($id){
+        $res = file_get_contents('http://music.163.com/api/song/lyric?os=pc&id='.$id.'&lv=-1&kv=-1&tv=-1');
+        $res = json_encode(json_decode($res));
+        
+        return $res;
+
+    }
+
+
+    /* 
+     解析
+     */
     public function curl($API){
       if (isset($API['encode'])) {
           $API=call_user_func_array(array($this,$API['encode']), array($API));

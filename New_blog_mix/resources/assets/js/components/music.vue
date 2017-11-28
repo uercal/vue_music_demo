@@ -1,27 +1,27 @@
 <template>
-  <div id="secondcomponent" style="position:relative;">    
-    <div>
-    <el-button @click="back" style="position:relative;float:left;">←</el-button>
-    <div id="player" class="aplayer"></div>
-    <br>    
-    <h1>{{title}}</h1>        
-    <a> written by {{ author }} </a>
-    <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>    
-    <el-button @click="showBgm">{{ show_title }}</el-button>
-    <transition name="slide-fade">
-    <el-card class="box-card" v-show="isload">                  
-      <br>
-      <li v-for='(value,index) in bgm'>
-        <img :src="value.src" class="avatar" style="height:100px" :title="value.title" @click="Onbgm(index)"></img>
-      </li>
-    </el-card>
-    </transition>
-    <ul v-if="isshow" v-for="value in playbgm">     
-        <el-button href='javascript:;' @click="play(value)">{{value.name}}</el-button>
-    </ul>    
+  <div id="secondcomponent" style="position:relative;height:100%;">
+    <div id="player" class="aplayer"></div>   
+    <div id="list" style="height:100%;width:25%;overflow-x:hidden;overflow-y:auto;">
+      <el-button @click="back">←</el-button>                                 
+      <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>
+      <el-button @click="showBgm">{{ show_title }}</el-button>
+      <transition name="slide-fade">
+        <el-card class="box-card" v-show="isload">                  
+          <br>
+          <li v-for='(value,index) in bgm'>
+            <img :src="value.src" class="avatar" style="height:50px" :title="value.title" @click="Onbgm(index)"></img>
+          </li>
+        </el-card>
+      </transition>
+      <ul v-if="isshow" v-for="value in playbgm">     
+          <el-button href='javascript:;' @click="play(value)">{{value.name}}</el-button>
+      </ul>      
     </div>
-    <div id="back" :style="backStyle"></div>
+    <div id="back">
+      <img :src="backStyle" id="image">
+    </div>
   </div>
+  
 </template>
 
 <script>
@@ -57,19 +57,17 @@ export default {
     var ap1 = new APlayer({
       element: document.getElementById('player'),
       narrow: false,
-      autoplay: true,
+      autoplay: false,
       showlrc: false,
       music: {
-          title: '',
-          author: '',
+          title: 'Demo',
+          author: 'Uercal',
           url: '',
           pic: '../images/1.jpg'
       }
     });
     ap1.init();      
-    
-    
-    // console.log(this.$el.querySelector('#audio'));    
+       
     console.log(ap1);
     this.$store.dispatch('getBgm',{audio:ap1});
   }
@@ -129,7 +127,7 @@ a {
   background-color:#000000;
   background-color:rgba(0,0,0,0.2);
   border: 0; 
-  //padding:0;
+  
 }
 #back{
   content: '';
@@ -142,14 +140,52 @@ a {
   bottom: 0;
   left: 0;  
   opacity: 0.5;
-  z-index:-1;
+  z-index:-1;    
+}
+#image{
+  /* margin:0 auto; */  
+  height: 100%;
+  /* -webkit-filter: blur(4px); filter: blur(4px);  */
 }
 #player{
-  width:20%;
+  width:30%;
   position:fixed;
-  right:2%;
-  
+  margin:0 auto;
+  left:0;
+  right:0; 
+  bottom: 0;
   z-index:1;
+  box-shadow:0 0 1px #666;
 }
+.aplayer-music{
+  color:#666;
+}
+
+
+
+
+/* 滚动条 */
+#list::-webkit-scrollbar  
+{  
+    width: 16px;  
+    height: 16px;  
+    background-color: black;  
+}  
+  
+/*定义滚动条轨道 内阴影+圆角*/  
+#list::-webkit-scrollbar-track  
+{  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    border-radius: 10px;  
+    background-color: black;  
+}  
+  
+/*定义滑块 内阴影+圆角*/  
+#list::-webkit-scrollbar-thumb  
+{  
+    border-radius: 10px;  
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
+    background-color: #555;  
+}  
 </style>
 

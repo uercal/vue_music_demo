@@ -32,3 +32,4 @@ Route::any('/music','HomeController@music');
 // music api
 Route::any('/music/getTracks','MusicController@getTracks');
 Route::any('/music/getDetail/{id}','MusicController@getDetail');
+Route::any('/music/getLyrics/{id}','MusicController@getLyrics');
