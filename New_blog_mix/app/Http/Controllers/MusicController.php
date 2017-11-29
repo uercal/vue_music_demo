@@ -40,20 +40,22 @@ class MusicController extends Controller
         $res = json_decode($res,true);
         $res = $res['lrc']['lyric'];
         // 去掉回车
-        $res = preg_replace("/\n/", "", $res);
-        $res = explode('[',$res);
-        unset($res[0]);
-        foreach ($res as $key => $value) {
-            $arr = explode(']',$value);            
-            $arr[0] = $this->formatTime($arr[0]);
-            $res[$key] = [];
-            $res[$key][] = $arr[0];
-            if(isset($arr[1])){
-                $res[$key][] = $arr[1];
-            }else{
-                $res[$key][] = '';
-            }                       
-        }                  
+        // $res = preg_replace("/\n/", "", $res);
+        // $res = explode('[',$res);
+        // unset($res[0]);
+        // foreach ($res as $key => $value) {
+        // //     $arr = explode(']',$value);            
+        // //     $arr[0] = $this->formatTime($arr[0]);
+        // //     $res[$key] = [];
+        // //     $res[$key][] = $arr[0];
+        // //     if(isset($arr[1])){
+        // //         $res[$key][] = $arr[1];
+        // //     }else{
+        // //         $res[$key][] = '';
+        // //     }                  
+        //     $res[$key] = '['.$value.'\n';
+        // }        
+        // $res = implode('',$res);        
         return $res;
     }
 
@@ -139,7 +141,7 @@ class MusicController extends Controller
 
     // 
     public function formatTime($t){
-        // $t = xx:xx.xx
+        // $t = xx:xx.xx        
         $t = explode(':',$t);
         $t = $t[0]*60 + $t[1];
         return $t;

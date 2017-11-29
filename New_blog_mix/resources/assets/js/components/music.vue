@@ -1,7 +1,7 @@
 <template>
-  <div id="secondcomponent" style="position:relative;height:100%;">
+  <div id="secondcomponent" style="position:relative;height:100%;">    
     <div id="player" class="aplayer">                 
-    </div>   
+    </div>
     <div id="list" style="height:100%;width:25%;overflow-x:hidden;overflow-y:auto;">
       <el-button @click="back">←</el-button>                                 
       <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>
@@ -40,7 +40,8 @@ export default {
     'isshow',
     'bgm',
     'audio',
-    'show_title'  
+    'show_title',
+    'lrc'
   ]),
   methods:{
     ...mapActions([
@@ -54,22 +55,23 @@ export default {
     }
   },
   mounted(){
-   
-    var ap1 = new APlayer({
-      element: document.getElementById('player'),
-      narrow: false,
-      autoplay: false,
-      showlrc: 1,
-      music: {
-          title: 'Demo',
-          author: 'Uercal',
-          url: '',
-          pic: '../images/1.jpg',
-          lrc: '',
-      }
-    });
+    console.log(this);
+    // var ap1 = new APlayer({
+    //   element: document.getElementById('player'),
+    //   narrow: false,
+    //   autoplay: false,
+    //   showlrc: 1,
+    //   music: {
+    //       title: 'Demo',
+    //       author: 'Uercal',
+    //       url: '',
+    //       pic: '../images/1.jpg',
+    //       lrc: this.lrc,
+    //   }
+    // });
     
-    console.log(ap1);
+    // console.log(ap1);
+    var ap1 = document.getElementById('player');
     this.$store.dispatch('getBgm',{audio:ap1});
   }
 }
@@ -148,35 +150,59 @@ a {
   /* -webkit-filter: blur(4px); filter: blur(4px);  */
 }
 #player{
-  width:30%;
+  width:40%;
   position:fixed;
   margin:0 auto;
   left:0;
   right:0; 
   bottom: 0;
   z-index:1;
-  box-shadow:0 0 1px #666;
+  box-shadow:0 !important;
 }
-.aplayer-music{
-  color:#666;
+svg{
+  display:none;
+}
+.aplayer{
+  box-shadow:0 0 0 0 rgba(0,0,0,0) !important;
+}
+.aplayer-pic{
+  position: absolute !important;
+  bottom: 0;
+}
+.aplayer-info{
+  height:auto !important;
+}
+.aplayer-lrc{
+  background:0 !important;
+  height:400px !important;
+}
+.aplayer .aplayer-lrc p{
+  color:#fffbfb;
+  font-size:13px;
+
+}
+.aplayer-lrc:before{
+  background:0 !important;
+}
+.aplayer-lrc:after{
+  background:0 !important;
 }
 
 
 
-/* 滚动条 */
+/* 滚动条  顶上圆角*/
 #list::-webkit-scrollbar  
 {  
     width: 16px;  
-    height: 16px;  
-    background-color: black;  
+    height: 16px;      
 }  
   
 /*定义滚动条轨道 内阴影+圆角*/  
 #list::-webkit-scrollbar-track  
 {  
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
-    border-radius: 10px;  
-    background-color: black;  
+    border-radius: 10px;      
+    opacity: 0.5;
 }  
   
 /*定义滑块 内阴影+圆角*/  
@@ -184,7 +210,7 @@ a {
 {  
     border-radius: 10px;  
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
-    background-color: #555;  
+    background-color: #ded4d4;  
 }  
 </style>
 

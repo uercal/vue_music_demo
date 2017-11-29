@@ -2,6 +2,7 @@ import axios from 'axios'
 // import jsonp from 'jsonp'
 // import qs from 'qs'
 // //
+import APlayer from 'APlayer'
 
 const state = {
     ids: [867822471, 150524989, 963404566],
@@ -12,6 +13,7 @@ const state = {
     show_title: 'SHOW',
     bgm: [],
     playbgm: [],
+    elemet: null,
     audio: null,
     backStyle: "/images/1.jpg",
     lrc: '',
@@ -44,28 +46,40 @@ const actions = {
         // 获取歌词
         axios.get('/music/getLyrics/' + value.id).then(res => {
             let lrc = res.data;
-            let arr = new Array();
-            for (const key in lrc) {
-                arr.push(lrc[key]);
-            }
-            state.audio.lrc = arr;
-            state.audio.lrcs[0] = arr;
-        });
-        axios.get('/music/getDetail/' + value.id, {}, {
-            headers: {},
-            emulateJSON: true
-        }).then(res => {
-            console.log(state.audio);
-            state.audio.audio.src = res.data;
-            state.audio.element.children[0].style.backgroundImage = "url(" + backUrl + ")";
-            state.backStyle = backUrl;
-            state.audio.pause();
-            state.audio.play();
+            state.lrc = lrc;
+            axios.get('/music/getDetail/' + value.id, {}, {
+                headers: {},
+                emulateJSON: true
+            }).then(res => {
+                state.audio = new APlayer({
+                    element: state.element,
+                    narrow: false,
+                    autoplay: false,
+                    showlrc: 1,
+                    music: {
+                        title: 'Demo',
+                        author: 'Uercal',
+                        url: res.data,
+                        pic: backUrl,
+                        lrc: state.lrc,
+                    }
+                });
 
-        }).catch(function(res) {
-            console.log('error');
-            console.log(res);
+                state.backStyle = backUrl;
+
+                console.log(state.audio);
+
+                // state.audio.audio.src = res.data;
+                // state.audio.element.children[0].style.backgroundImage = "url(" + backUrl + ")";
+
+                state.audio.audio.play();
+
+            }).catch(function(res) {
+                console.log('error');
+                console.log(res);
+            });
         });
+
 
     },
     getBgm({ commit }, payload) {
@@ -97,7 +111,7 @@ const actions = {
 const mutations = {
     ['LOADED_BGM'](state, { data, payload }) {
         state.bgm = data;
-        state.audio = payload.audio;
+        state.element = payload.audio;
     },
 
     ['LOADED_TRACKS'](state, { data }) {
