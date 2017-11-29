@@ -1,6 +1,7 @@
 <template>
   <div id="secondcomponent" style="position:relative;height:100%;">
-    <div id="player" class="aplayer"></div>   
+    <div id="player" class="aplayer">                 
+    </div>   
     <div id="list" style="height:100%;width:25%;overflow-x:hidden;overflow-y:auto;">
       <el-button @click="back">←</el-button>                                 
       <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>
@@ -26,7 +27,7 @@
 
 <script>
 
-import APlayer from '../static/APlayer.min';
+import APlayer from 'APlayer';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {  
@@ -39,7 +40,7 @@ export default {
     'isshow',
     'bgm',
     'audio',
-    'show_title'
+    'show_title'  
   ]),
   methods:{
     ...mapActions([
@@ -58,16 +59,16 @@ export default {
       element: document.getElementById('player'),
       narrow: false,
       autoplay: false,
-      showlrc: false,
+      showlrc: 1,
       music: {
           title: 'Demo',
           author: 'Uercal',
           url: '',
-          pic: '../images/1.jpg'
+          pic: '../images/1.jpg',
+          lrc: '',
       }
     });
-    ap1.init();      
-       
+    
     console.log(ap1);
     this.$store.dispatch('getBgm',{audio:ap1});
   }
@@ -76,7 +77,6 @@ export default {
 
 <style>
 @import  '../static/APlayer.min.css';
-
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -160,7 +160,6 @@ a {
 .aplayer-music{
   color:#666;
 }
-
 
 
 

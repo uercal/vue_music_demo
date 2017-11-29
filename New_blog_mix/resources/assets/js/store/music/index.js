@@ -14,6 +14,7 @@ const state = {
     playbgm: [],
     audio: null,
     backStyle: "/images/1.jpg",
+    lrc: '',
 }
 
 const getters = {
@@ -25,7 +26,8 @@ const getters = {
     show_title: state => state.show_title,
     bgm: state => state.bgm,
     playbgm: state => state.playbgm,
-    audio: state => state.audio
+    audio: state => state.audio,
+    lrc: state => state.lrc
 }
 
 const actions = {
@@ -41,17 +43,21 @@ const actions = {
         let backUrl = value.al.picUrl;
         // 获取歌词
         axios.get('/music/getLyrics/' + value.id).then(res => {
-            let lrc = res.data.lrc.lyric;
-            state.audio.music.lrc = lrc;
-            state.audio.option.showlrc = 1;
-        })
+            let lrc = res.data;
+            let arr = new Array();
+            for (const key in lrc) {
+                arr.push(lrc[key]);
+            }
+            state.audio.lrc = arr;
+            state.audio.lrcs[0] = arr;
+        });
         axios.get('/music/getDetail/' + value.id, {}, {
             headers: {},
             emulateJSON: true
         }).then(res => {
             console.log(state.audio);
             state.audio.audio.src = res.data;
-            state.audio.element.children[0].firstChild.src = backUrl;
+            state.audio.element.children[0].style.backgroundImage = "url(" + backUrl + ")";
             state.backStyle = backUrl;
             state.audio.pause();
             state.audio.play();

@@ -37,10 +37,24 @@ class MusicController extends Controller
 
     public function getLyrics($id){
         $res = file_get_contents('http://music.163.com/api/song/lyric?os=pc&id='.$id.'&lv=-1&kv=-1&tv=-1');
-        $res = json_encode(json_decode($res));
-        
+        $res = json_decode($res,true);
+        $res = $res['lrc']['lyric'];
+        // 去掉回车
+        $res = preg_replace("/\n/", "", $res);
+        $res = explode('[',$res);
+        unset($res[0]);
+        foreach ($res as $key => $value) {
+            $arr = explode(']',$value);            
+            $arr[0] = $this->formatTime($arr[0]);
+            $res[$key] = [];
+            $res[$key][] = $arr[0];
+            if(isset($arr[1])){
+                $res[$key][] = $arr[1];
+            }else{
+                $res[$key][] = '';
+            }                       
+        }                  
         return $res;
-
     }
 
 
@@ -120,5 +134,14 @@ class MusicController extends Controller
               'useragent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
       );      
       return $BASE;
+    }
+
+
+    // 
+    public function formatTime($t){
+        // $t = xx:xx.xx
+        $t = explode(':',$t);
+        $t = $t[0]*60 + $t[1];
+        return $t;
     }
 }
