@@ -12,5 +12,5 @@
     <music></music>
   </div>
 </body>
-<script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ mix('js/app_music.js') }}"></script>
 </html>

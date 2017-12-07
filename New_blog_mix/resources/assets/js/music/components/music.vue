@@ -78,7 +78,6 @@ export default {
 </script>
 
 <style>
-@import  '../static/APlayer.min.css';
 .slide-fade-enter-active {
   transition: all .3s ease;
 }
@@ -174,12 +173,12 @@ svg{
 }
 .aplayer-lrc{
   background:0 !important;
-  height:400px !important;
+  height:450px !important;
 }
 .aplayer .aplayer-lrc p{
   color:#fffbfb;
   font-size:13px;
-
+  /* height: 1% !important; */
 }
 .aplayer-lrc:before{
   background:0 !important;
@@ -187,7 +186,14 @@ svg{
 .aplayer-lrc:after{
   background:0 !important;
 }
-
+.aplayer-title{
+  color:lightblue;
+  font-size: 16px !important;
+}
+.aplayer-author{
+  color:lightblue !important;
+  font-size: 16px !important;
+}
 
 
 /* 滚动条  顶上圆角*/

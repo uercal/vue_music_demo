@@ -15,12 +15,17 @@ window.Vue = require('vue');
  */
 
 
-Vue.component('home', require('./components/HomeIndex.vue'));
+Vue.component('music', require('./components/music.vue'));
 
 // import example from './components/Example.vue';
 // import Home from './components/HomeIndex.vue';
 
-//
+// 
+import router from './router/index';
+//store
+import store from './store'
+
+// 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
@@ -28,6 +33,8 @@ Vue.use(ElementUI);
 //
 
 
+
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
 });

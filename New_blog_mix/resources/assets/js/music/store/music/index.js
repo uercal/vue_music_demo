@@ -53,24 +53,20 @@ const actions = {
             }).then(res => {
                 state.audio = new APlayer({
                     element: state.element,
-                    narrow: false,
+                    // narrow: false,
                     autoplay: false,
                     showlrc: 1,
                     music: {
-                        title: 'Demo',
-                        author: 'Uercal',
-                        url: res.data,
+                        title: value.name,
+                        author: value.ar[0].name,
+                        url: res.data.data[0]['url'],
                         pic: backUrl,
                         lrc: state.lrc,
                     }
                 });
 
                 state.backStyle = backUrl;
-
                 console.log(state.audio);
-
-                // state.audio.audio.src = res.data;
-                // state.audio.element.children[0].style.backgroundImage = "url(" + backUrl + ")";
 
                 state.audio.audio.play();
 
