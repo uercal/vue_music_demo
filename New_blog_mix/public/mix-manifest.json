@@ -1,4 +1,6 @@
 {
+    "/js/app_music.js": "/js/app_music.js",
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/app_blog.js": "/js/app_blog.js"
 }

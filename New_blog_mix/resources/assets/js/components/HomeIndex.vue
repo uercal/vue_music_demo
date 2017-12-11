@@ -11,6 +11,11 @@
           music
       </el-button>
     </ul>
+    <ul>
+      <el-button onclick="window.location.href='/blog'">
+          blog
+      </el-button>
+    </ul>
   </div>
 </template>
 

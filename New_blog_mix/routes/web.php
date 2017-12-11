@@ -28,8 +28,12 @@ Route::get('/test',function(){
 
 Route::any('/','HomeController@index');
 Route::any('/music','HomeController@music');
-
+Route::any('/blog','HomeController@blog');
 // music api
 Route::any('/music/getTracks','MusicController@getTracks');
 Route::any('/music/getDetail/{id}','MusicController@getDetail');
 Route::any('/music/getLyrics/{id}','MusicController@getLyrics');
+
+
+// Blog
+Route::any('/blog/getIp','BlogController@getIp');

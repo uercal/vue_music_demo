@@ -13,6 +13,8 @@ let mix = require('laravel-mix');
 
 //  Home
 mix.js('resources/assets/js/app.js', 'public/js')
-    // 
-    .js('resources/assets/js/music/app_music.js', 'public/js')
+    // music
+    .js('resources/assets/js/pages/music/app_music.js', 'public/js')
+    // blog
+    .js('resources/assets/js/pages/blog/app_blog.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css');
