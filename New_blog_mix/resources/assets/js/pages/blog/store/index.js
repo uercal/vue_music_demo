@@ -1,5 +1,5 @@
 //引入模块
-window.Vue = require('vue');
+import Vue from 'vue'
 
 import Vuex from 'vuex'
 //引入公共状态
@@ -8,12 +8,143 @@ import Vuex from 'vuex'
 //引入组件状态
 
 // import music from './music/index'
-import index from './index/index'
+import axios from 'axios'
+// import $ from '../static/flavr/js/jquery.min.js'
+import flavr from '../static/flavr.min.js'
+// import jsonp from 'jsonp'
+// import qs from 'qs'
+// //
+
+const state = {
+
+}
+
+const getters = {
+
+}
+
+const actions = {
+    Login: ({ commit }) => {
+        let html =
+            '<div class="form-row"><input type="text" name="username" placeholder="Username" />' +
+            '</div><div class="form-row"><input type="password" name="password" placeholder="Password" />' +
+            '</div><div class="form-row"><input type="checkbox" name="remember" id="check"/>' +
+            '<label for="check">Remember me</label>' +
+            '</div>';
+        new flavr({
+            title: 'Login',
+            iconPath: 'flavr/images/',
+            icon: 'user.png',
+            content: 'Welcome Back',
+            dialog: 'form',
+            animateEntrance: 'pulse',
+            closeOverlay: true,
+            closeEsc: true,
+            form: { content: html },
+            buttons: {
+                Login: {
+                    style: 'info',
+                    action: function($container, $form) {
+                        //- alert($form.serialize());          
+                        var data = $form.serializeArray();
+                        if (data[0]['value'] == '') {
+                            flavr('用户名不能为空!');
+                        } else {
+                            axios.post('/blog/login', data).then(function(res) {
+                                console.log(res)
+                                if (res.state) {
+                                    new flavr({
+                                        content: res.msg,
+                                        autoclose: true,
+                                        timeout: 2000,
+                                        onShow: function() {
+                                            window.location.reload();
+                                        },
+                                        onClose: function() {
+                                            window.location.reload();
+                                        }
+                                    })
+                                } else {
+                                    new flavr(res.msg);
+                                }
+                            })
+                        }
+                        return false;
+                    }
+                },
+                Cancle: {
+                    style: 'danger'
+                }
+            }
+        })
+    },
+    Regist: ({ commit }) => {
+        var html = '<div class="form-row"><input type="text" name="username" placeholder="Username" /></div><div class="form-row"><input type="password" name="password" placeholder="Password"/></div><div class="form-row"><input type="password" name="repassword" placeholder="Password Again"/></div><div class="form-row"><input type="checkbox" name="remember" id="check"/><label for="check">Remember me</label></div>';
+        new flavr({
+            title: 'Regist',
+            iconPath: 'flavr/images/',
+            icon: 'user-add.png',
+            content: 'Welcome to join us',
+            dialog: 'form',
+            closeOverlay: true,
+            closeEsc: true,
+            form: { content: html },
+            buttons: {
+                Regist: {
+                    style: 'info',
+                    action: function($container, $form) {
+                        //- alert($form.serialize());          
+                        var data = $form.serializeArray();
+                        if (data[0]['value'] == '') {
+                            $.flavr('用户名不能为空!');
+                        }
+                        if (data[1]['value'] != data[2]['value']) {
+                            $.flavr('两次密码不一致!');
+                        } else {
+                            $.post('/regist', data, function(res) {
+                                if (res.state) {
+                                    $.flavr({
+                                        content: res.msg,
+                                        autoclose: true,
+                                        timeout: 2000,
+                                        buttons: {
+                                            done: {
+                                                action: function() {
+                                                    window.location.reload();
+                                                }
+                                            }
+                                        },
+                                        onShow: function() {
+                                            window.location.reload();
+                                        }
+                                    });
+                                } else {
+                                    $.flavr(res.msg);
+                                }
+                                console.log(res);
+                            });
+                        }
+                        return false;
+                    }
+                },
+                Cancle: {
+                    style: 'danger'
+                }
+            }
+        });
+
+    }
+}
+
+//传递给vue需要改变的数据（方法）
+const mutations = {
+
+}
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-    index,
-    // getters,
-    // actions
+const store = new Vuex.Store({
+    actions
 })
+
+export default store

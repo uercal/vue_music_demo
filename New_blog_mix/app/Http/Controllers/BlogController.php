@@ -19,4 +19,7 @@ class BlogController extends Controller
       return $callback;
     }
     
+    public function login(){
+      return '1';
+    }
 }

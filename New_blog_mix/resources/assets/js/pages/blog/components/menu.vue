@@ -87,6 +87,7 @@
         }      
       },
       Login:function(){
+        console.log(this.$store)
         this.$store.dispatch('Login')
       },
       Regist:function(){
