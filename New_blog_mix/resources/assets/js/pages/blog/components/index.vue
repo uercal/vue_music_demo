@@ -21,9 +21,17 @@
                   <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                       <div class="slider-text-inner">
-                        <h1>We are Happy to Create Newest Modern Websites</h1>
-                        <h2>Welcome<a href="http://www.cssmoban.com/" target="_blank" title="模板之家">&#x6A21;&#x677F;&#x4E4B;&#x5BB6;</a><a href="http://www.cssmoban.com/" title="网页模板" target="_blank">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></h2>
-                        <p><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn btn-primary btn-demo popup-vimeo"><i class="icon-monitor"> </i>Live Preview </a><a class="btn btn-primary btn-learn">Learn More <i class="icon-arrow-right3"> </i></a></p>
+                        <h1> </h1>
+                        <h2>Welcome</h2>
+                        <p>
+                          <a href="#" class="btn btn-primary btn-demo popup-vimeo">
+                          <i class="icon-monitor"> </i>
+                          Live Preview 
+                          </a>
+                          <a class="btn btn-primary btn-learn">
+                            Learn More <i class="icon-arrow-right3"> </i>
+                          </a>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -35,9 +43,17 @@
                   <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                       <div class="slider-text-inner">
-                        <h1>Download our Free HTML5 Bootstrap Template</h1>
-                        <h2><a href="http://www.cssmoban.com/" target="_blank" title="模板之家">&#x6A21;&#x677F;&#x4E4B;&#x5BB6;</a><a href="http://www.cssmoban.com/" title="网页模板" target="_blank">&#x7F51;&#x9875;&#x6A21;&#x677F;</a></h2>
-                        <p><a href="https://vimeo.com/channels/staffpicks/93951774" class="btn btn-primary btn-demo popup-vimeo"><i class="icon-monitor"></i></a><a class="btn btn-primary btn-learn"><i class="icon-arrow-right3"></i></a></p>
+                        <h1></h1>
+                        <h2></h2>
+                        <p>
+                          <a href="#" class="btn btn-primary btn-demo popup-vimeo">
+                          <i class="icon-monitor"> </i>
+                          Live Preview 
+                          </a>
+                          <a class="btn btn-primary btn-learn">
+                            Learn More <i class="icon-arrow-right3"> </i>
+                          </a>
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -45,8 +61,7 @@
               </li>
             </ul>
           </div>
-        </aside>
-        <div class="copyrights"><a href="http://www.cssmoban.com/" title="网站模板">&#x7F51;&#x7AD9;&#x6A21;&#x677F;</a></div>
+        </aside>        
         <div class="fh5co-narrow-content">
           <h2 data-animate-effect="fadeInLeft" class="fh5co-heading animate-box">Services</h2>
           <div class="row">
