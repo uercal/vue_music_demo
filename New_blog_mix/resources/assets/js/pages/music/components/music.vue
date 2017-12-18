@@ -218,5 +218,10 @@ svg{
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
     background-color: #ded4d4;  
 }  
+
+
+.aplayer-lrc-contents{
+  margin-top: 225px;
+}
 </style>
 
