@@ -8,7 +8,7 @@ import Vuex from 'vuex'
 //引入组件状态
 
 // import music from './music/index'
-import axios from 'axios'
+
 // import $ from '../static/flavr/js/jquery.min.js'
 import flavr from '../static/flavr.min.js'
 // import jsonp from 'jsonp'

@@ -275,7 +275,7 @@ function deepMerge(target, source) {
 "use strict";
 
 
-var bind = __webpack_require__(27);
+var bind = __webpack_require__(28);
 var isBuffer = __webpack_require__(59);
 
 /*global toString:true*/
@@ -11785,10 +11785,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(29);
+    adapter = __webpack_require__(30);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(29);
+    adapter = __webpack_require__(30);
   }
   return adapter;
 }
@@ -11859,7 +11859,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
 
 /***/ }),
 /* 16 */
@@ -12114,6 +12114,12 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
+module.exports = __webpack_require__(58);
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -12129,7 +12135,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -12319,7 +12325,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12330,7 +12336,7 @@ var settle = __webpack_require__(62);
 var buildURL = __webpack_require__(64);
 var parseHeaders = __webpack_require__(65);
 var isURLSameOrigin = __webpack_require__(66);
-var createError = __webpack_require__(30);
+var createError = __webpack_require__(31);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(67);
 
 module.exports = function xhrAdapter(config) {
@@ -12506,7 +12512,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12531,7 +12537,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12543,7 +12549,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12567,12 +12573,6 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(58);
 
 /***/ }),
 /* 34 */
@@ -43763,7 +43763,7 @@ if (typeof jQuery === 'undefined') {
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(27);
+var bind = __webpack_require__(28);
 var Axios = __webpack_require__(60);
 var defaults = __webpack_require__(15);
 
@@ -43798,9 +43798,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(32);
+axios.Cancel = __webpack_require__(33);
 axios.CancelToken = __webpack_require__(74);
-axios.isCancel = __webpack_require__(31);
+axios.isCancel = __webpack_require__(32);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -43960,7 +43960,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(30);
+var createError = __webpack_require__(31);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -44379,7 +44379,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(71);
-var isCancel = __webpack_require__(31);
+var isCancel = __webpack_require__(32);
 var defaults = __webpack_require__(15);
 
 /**
@@ -44532,7 +44532,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(32);
+var Cancel = __webpack_require__(33);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -44873,7 +44873,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(29)))
 
 /***/ }),
 /* 78 */
@@ -87979,7 +87979,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(33);
+window.axios = __webpack_require__(27);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -88099,7 +88099,7 @@ exports = module.exports = __webpack_require__(78)(undefined);
 
 
 // module
-exports.push([module.i, "\n.slide-fade-enter-active {\r\n  -webkit-transition: all .3s ease;\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\r\n  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active for below version 2.1.8 */ {\r\n  -webkit-transform: translateX(10px);\r\n          transform: translateX(10px);\r\n  opacity: 0;\n}\n.box-card .avatar{\r\n  cursor:pointer;\n}\n#secondcomponent {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: center;\r\n  color: #2c3e50;\r\n  margin-top: 0px;\n}\nh1, h2 {\r\n  font-weight: normal;\n}\nul {\r\n  list-style-type: none;\r\n  padding: 0;\n}\nli {\r\n  display: inline-block;\r\n  margin: 0 10px;\n}\na {\r\n  color: #42b983;\n}\n.el-card{\r\n  background-color:#000000;\r\n  background-color:rgba(0,0,0,0);\r\n  border:0;\r\n  box-shadow: 0 2px 12px 0 rgba(0,0,0,0);\r\n  -webkit-box-shadow:0;\n}\n.el-button {\r\n  background-color:#000000;\r\n  background-color:rgba(0,0,0,0.2);\r\n  border: 0;\n}\n#back{\r\n  content: '';\r\n  display: block;\r\n  width: 100%;\r\n  height: 100%;\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  left: 0;  \r\n  opacity: 0.5;\r\n  z-index:-1;\n}\n#image{\r\n  /* margin:0 auto; */  \r\n  height: 100%;\r\n  /* -webkit-filter: blur(4px); filter: blur(4px);  */\n}\n#player{\r\n  width:40%;\r\n  position:fixed;\r\n  margin:0 auto;\r\n  left:0;\r\n  right:0; \r\n  bottom: 0;\r\n  z-index:1;\r\n  -webkit-box-shadow:0 !important;\r\n          box-shadow:0 !important;\n}\nsvg{\r\n  display:none;\n}\n.aplayer{\r\n  -webkit-box-shadow:0 0 0 0 rgba(0,0,0,0) !important;\r\n          box-shadow:0 0 0 0 rgba(0,0,0,0) !important;\n}\n.aplayer-pic{\r\n  position: absolute !important;\r\n  bottom: 0;\n}\n.aplayer-info{\r\n  height:auto !important;\n}\n.aplayer-lrc{\r\n  background:0 !important;\r\n  height:450px !important;\n}\n.aplayer .aplayer-lrc p{\r\n  color:#fffbfb;\r\n  font-size:13px;\r\n  /* height: 1% !important; */\n}\n.aplayer-lrc:before{\r\n  background:0 !important;\n}\n.aplayer-lrc:after{\r\n  background:0 !important;\n}\n.aplayer-title{\r\n  color:lightblue;\r\n  font-size: 16px !important;\n}\n.aplayer-author{\r\n  color:lightblue !important;\r\n  font-size: 16px !important;\n}\r\n\r\n\r\n/* 滚动条  顶上圆角*/\n#list::-webkit-scrollbar  \r\n{  \r\n    width: 16px;  \r\n    height: 16px;\n}  \r\n  \r\n/*定义滚动条轨道 内阴影+圆角*/\n#list::-webkit-scrollbar-track  \r\n{  \r\n    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  \r\n    border-radius: 10px;      \r\n    opacity: 0.5;\n}  \r\n  \r\n/*定义滑块 内阴影+圆角*/\n#list::-webkit-scrollbar-thumb  \r\n{  \r\n    border-radius: 10px;  \r\n    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  \r\n    background-color: #ded4d4;\n}  \r\n", ""]);
+exports.push([module.i, "\n.slide-fade-enter-active {\r\n  -webkit-transition: all .3s ease;\r\n  transition: all .3s ease;\n}\n.slide-fade-leave-active {\r\n  -webkit-transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\r\n  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\r\n/* .slide-fade-leave-active for below version 2.1.8 */ {\r\n  -webkit-transform: translateX(10px);\r\n          transform: translateX(10px);\r\n  opacity: 0;\n}\n.box-card .avatar{\r\n  cursor:pointer;\n}\n#secondcomponent {\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  text-align: center;\r\n  color: #2c3e50;\r\n  margin-top: 0px;\n}\nh1, h2 {\r\n  font-weight: normal;\n}\nul {\r\n  list-style-type: none;\r\n  padding: 0;\n}\nli {\r\n  display: inline-block;\r\n  margin: 0 10px;\n}\na {\r\n  color: #42b983;\n}\n.el-card{\r\n  background-color:#000000;\r\n  background-color:rgba(0,0,0,0);\r\n  border:0;\r\n  box-shadow: 0 2px 12px 0 rgba(0,0,0,0);\r\n  -webkit-box-shadow:0;\n}\n.el-button {\r\n  background-color:#000000;\r\n  background-color:rgba(0,0,0,0.2);\r\n  border: 0;\n}\n#back{\r\n  content: '';\r\n  display: block;\r\n  width: 100%;\r\n  height: 100%;\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  bottom: 0;\r\n  left: 0;  \r\n  opacity: 0.5;\r\n  z-index:-1;\n}\n#image{\r\n  /* margin:0 auto; */  \r\n  height: 100%;\r\n  /* -webkit-filter: blur(4px); filter: blur(4px);  */\n}\n#player{\r\n  width:40%;\r\n  position:fixed;\r\n  margin:0 auto;\r\n  left:0;\r\n  right:0; \r\n  bottom: 0;\r\n  z-index:1;\r\n  -webkit-box-shadow:0 !important;\r\n          box-shadow:0 !important;\n}\nsvg{\r\n  display:none;\n}\n.aplayer{\r\n  -webkit-box-shadow:0 0 0 0 rgba(0,0,0,0) !important;\r\n          box-shadow:0 0 0 0 rgba(0,0,0,0) !important;\n}\n.aplayer-pic{\r\n  position: absolute !important;\r\n  bottom: 0;\n}\n.aplayer-info{\r\n  height:auto !important;\n}\n.aplayer-lrc{\r\n  background:0 !important;\r\n  height:450px !important;\n}\n.aplayer .aplayer-lrc p{\r\n  color:#fffbfb;\r\n  font-size:13px;\r\n  /* height: 1% !important; */\n}\n.aplayer-lrc:before{\r\n  background:0 !important;\n}\n.aplayer-lrc:after{\r\n  background:0 !important;\n}\n.aplayer-title{\r\n  color:lightblue;\r\n  font-size: 16px !important;\n}\n.aplayer-author{\r\n  color:lightblue !important;\r\n  font-size: 16px !important;\n}\r\n\r\n\r\n/* 滚动条  顶上圆角*/\n#list::-webkit-scrollbar  \r\n{  \r\n    width: 16px;  \r\n    height: 16px;\n}  \r\n  \r\n/*定义滚动条轨道 内阴影+圆角*/\n#list::-webkit-scrollbar-track  \r\n{  \r\n    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  \r\n    border-radius: 10px;      \r\n    opacity: 0.5;\n}  \r\n  \r\n/*定义滑块 内阴影+圆角*/\n#list::-webkit-scrollbar-thumb  \r\n{  \r\n    border-radius: 10px;  \r\n    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  \r\n    background-color: #ded4d4;\n}\n.aplayer-lrc-contents{\r\n  margin-top: 225px;\n}\r\n", ""]);
 
 // exports
 
@@ -88348,16 +88348,13 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_APlayer__ = __webpack_require__(184);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_APlayer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_APlayer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_APlayer__ = __webpack_require__(184);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_APlayer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_APlayer__);
 var _mutations;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 
 // import jsonp from 'jsonp'
 // import qs from 'qs'
@@ -88428,14 +88425,14 @@ var actions = {
         console.log(value);
         var backUrl = value.al.picUrl;
         // 获取歌词
-        __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/music/getLyrics/' + value.id).then(function (res) {
+        axios.get('/music/getLyrics/' + value.id).then(function (res) {
             var lrc = res.data;
             state.lrc = lrc;
-            __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/music/getDetail/' + value.id, {}, {
+            axios.get('/music/getDetail/' + value.id, {}, {
                 headers: {},
                 emulateJSON: true
             }).then(function (res) {
-                state.audio = new __WEBPACK_IMPORTED_MODULE_1_APlayer___default.a({
+                state.audio = new __WEBPACK_IMPORTED_MODULE_0_APlayer___default.a({
                     element: state.element,
                     // narrow: false,
                     autoplay: false,
@@ -88474,7 +88471,7 @@ var actions = {
             for (var _iterator = ids[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var i = _step.value;
 
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/music/getTracks?list_id=' + i).then(function (res) {
+                axios.get('/music/getTracks?list_id=' + i).then(function (res) {
                     console.log(res);
                     data.push({
                         title: res.data.playlist.name,
