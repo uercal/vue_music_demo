@@ -15,9 +15,7 @@ import flavr from '../static/flavr.min.js'
 // import qs from 'qs'
 // //
 
-const state = {
-
-}
+const state = {}
 
 const getters = {
 
@@ -52,20 +50,20 @@ const actions = {
                         } else {
                             axios.post('/blog/login', data).then(function(res) {
                                 console.log(res)
-                                if (res.state) {
+                                if (res.data.code == 200) {
                                     new flavr({
-                                        content: res.msg,
+                                        content: res.data.msg,
                                         autoclose: true,
                                         timeout: 2000,
                                         onShow: function() {
-                                            window.location.reload();
+
                                         },
                                         onClose: function() {
                                             window.location.reload();
                                         }
                                     })
                                 } else {
-                                    new flavr(res.msg);
+                                    new flavr(res.data.msg);
                                 }
                             })
                         }
@@ -101,10 +99,10 @@ const actions = {
                         if (data[1]['value'] != data[2]['value']) {
                             $.flavr('两次密码不一致!');
                         } else {
-                            $.post('/regist', data, function(res) {
-                                if (res.state) {
-                                    $.flavr({
-                                        content: res.msg,
+                            axios.post('/regist', data).then(function(res) {
+                                if (res.data.code == 200) {
+                                    new flavr({
+                                        content: res.data.msg,
                                         autoclose: true,
                                         timeout: 2000,
                                         buttons: {
@@ -115,11 +113,11 @@ const actions = {
                                             }
                                         },
                                         onShow: function() {
-                                            window.location.reload();
+
                                         }
                                     });
                                 } else {
-                                    $.flavr(res.msg);
+                                    new flavr(res.data.msg);
                                 }
                                 console.log(res);
                             });

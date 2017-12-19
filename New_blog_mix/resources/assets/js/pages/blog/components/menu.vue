@@ -3,7 +3,7 @@
     <div id="fh5co-page">
       <a href="javascript:;" class="js-fh5co-nav-toggle fh5co-nav-toggle" :class="aCss" @click="changeCss"><i></i></a>
       <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-        <h1 id="fh5co-logo"><a href="index.html">Marble</a></h1>
+        <h1 id="fh5co-logo"><a href="index.html">uercal</a></h1>
         <nav id="fh5co-main-menu" role="navigation">      
           <ul>
             <li :class="isActive(1)" @click="menu(1)"><router-link to="/">Home</router-link></li>            
@@ -56,7 +56,7 @@
 
 <script>
   import axios from 'axios'
-  import { mapActions } from 'vuex'
+  import { mapGetters,mapActions } from 'vuex'
   export default {
     data:()=>{
       return {
@@ -67,7 +67,7 @@
         ip:'',
         address:'',
       }      
-    },
+    },    
     methods:{
       menu(index){
         this.menu_index = index
@@ -99,6 +99,7 @@
         this.ip = res.data.ip
         this.address = res.data.address        
       })
+      // console.log(document.querySelector('meta[name=csrf-token]').getAttribute('content'));
     }
   }
   

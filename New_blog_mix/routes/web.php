@@ -38,4 +38,6 @@ Route::any('/music/getLyrics/{id}','MusicController@getLyrics');
 // Blog
 Route::any('/blog/getIp','BlogController@getIp');
 // Login
-Route::post('/blog/login','BlogController@login');
+Route::post('/blog/login','LoginController@login');
+// Regist
+Route::post('/regist','LoginController@create');
