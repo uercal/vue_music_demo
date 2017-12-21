@@ -71,7 +71,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(28);
+var bind = __webpack_require__(27);
 var isBuffer = __webpack_require__(59);
 
 /*global toString:true*/
@@ -11135,10 +11135,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(30);
+    adapter = __webpack_require__(29);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(30);
+    adapter = __webpack_require__(29);
   }
   return adapter;
 }
@@ -11209,7 +11209,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
 
 /***/ }),
 /* 16 */,
@@ -11334,12 +11334,6 @@ module.exports = function normalizeComponent (
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(58);
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
@@ -11355,7 +11349,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -11545,7 +11539,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11556,7 +11550,7 @@ var settle = __webpack_require__(62);
 var buildURL = __webpack_require__(64);
 var parseHeaders = __webpack_require__(65);
 var isURLSameOrigin = __webpack_require__(66);
-var createError = __webpack_require__(31);
+var createError = __webpack_require__(30);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(67);
 
 module.exports = function xhrAdapter(config) {
@@ -11732,7 +11726,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11757,7 +11751,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 32 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11769,7 +11763,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 33 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11795,6 +11789,7 @@ module.exports = Cancel;
 
 
 /***/ }),
+/* 33 */,
 /* 34 */,
 /* 35 */,
 /* 36 */,
@@ -11814,7 +11809,12 @@ module.exports = Cancel;
 /* 50 */,
 /* 51 */,
 /* 52 */,
-/* 53 */,
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(58);
+
+/***/ }),
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41585,7 +41585,7 @@ if (typeof jQuery === 'undefined') {
 
 
 var utils = __webpack_require__(1);
-var bind = __webpack_require__(28);
+var bind = __webpack_require__(27);
 var Axios = __webpack_require__(60);
 var defaults = __webpack_require__(15);
 
@@ -41620,9 +41620,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(33);
+axios.Cancel = __webpack_require__(32);
 axios.CancelToken = __webpack_require__(74);
-axios.isCancel = __webpack_require__(32);
+axios.isCancel = __webpack_require__(31);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -41782,7 +41782,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(31);
+var createError = __webpack_require__(30);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -42201,7 +42201,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(1);
 var transformData = __webpack_require__(71);
-var isCancel = __webpack_require__(32);
+var isCancel = __webpack_require__(31);
 var defaults = __webpack_require__(15);
 
 /**
@@ -42354,7 +42354,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(33);
+var Cancel = __webpack_require__(32);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -42695,7 +42695,7 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(29)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(28)))
 
 /***/ }),
 /* 78 */,
@@ -46490,7 +46490,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(27);
+window.axios = __webpack_require__(53);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -46577,9 +46577,11 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(53);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(100);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -46645,12 +46647,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       menu_index: 1,
       aCss: '',
       bCss: '',
-      isChange: 0,
-      ip: '',
-      address: ''
+      isChange: 0
+
     };
   },
-  methods: {
+  computed: Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["c" /* mapGetters */])(['is_login', 'u_img', 'u_name', 'welcome', 'ip', 'address']),
+  methods: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_1_vuex__["b" /* mapActions */])(['logOut']), {
     menu: function menu(index) {
       this.menu_index = index;
     },
@@ -46676,14 +46678,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     Regist: function Regist() {
       this.$store.dispatch('Regist');
     }
-  },
+  }),
   mounted: function mounted() {
-    var _this = this;
-
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/blog/getIp').then(function (res) {
-      _this.ip = res.data.ip;
-      _this.address = res.data.address;
-    });
+    this.$store.dispatch('isLogin');
     // console.log(document.querySelector('meta[name=csrf-token]').getAttribute('content'));
   }
 });
@@ -46803,45 +46800,82 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "fh5co-footer" }, [
               _c("div", [
-                _c("input", {
-                  attrs: { id: "handle_status", value: "", hidden: "hidden" }
-                }),
+                _c("p", { domProps: { innerHTML: _vm._s(_vm.welcome) } }),
                 _vm._v(" "),
-                _c("p", [_vm._v("Welcome Customer by:\t\n            ")]),
                 _c("p", { domProps: { innerHTML: _vm._s(_vm.ip) } }),
                 _vm._v(" "),
                 _c("p", { domProps: { innerHTML: _vm._s(_vm.address) } }),
                 _vm._v(" "),
-                _c("ul", [
-                  _c("li", [
-                    _c(
-                      "a",
+                _c(
+                  "ul",
+                  {
+                    directives: [
                       {
-                        attrs: { href: "javascript:;", title: "login" },
-                        on: { click: _vm.Login }
-                      },
-                      [_c("i", { staticClass: "icon-user-outline" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("li", [
-                    _c(
-                      "a",
-                      {
-                        attrs: { href: "javascript:;", title: "reg" },
-                        on: { click: _vm.Regist }
-                      },
-                      [_c("i", { staticClass: "icon-user-add" })]
-                    )
-                  ])
-                ]),
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.is_login,
+                        expression: "!is_login"
+                      }
+                    ],
+                    staticStyle: { display: "none" }
+                  },
+                  [
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "javascript:;", title: "login" },
+                          on: { click: _vm.Login }
+                        },
+                        [_c("i", { staticClass: "icon-user-outline" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "javascript:;", title: "reg" },
+                          on: { click: _vm.Regist }
+                        },
+                        [_c("i", { staticClass: "icon-user-add" })]
+                      )
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
-                _c("p")
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.is_login,
+                        expression: "is_login"
+                      }
+                    ],
+                    staticStyle: { display: "none" }
+                  },
+                  [
+                    _c("img", {
+                      attrs: { id: "person", src: _vm.u_img, title: _vm.u_name }
+                    }),
+                    _vm._v(" "),
+                    _c("ul", [
+                      _vm._m(1, false, false),
+                      _vm._v(" "),
+                      _c("li", { on: { click: _vm.logOut } }, [
+                        _vm._m(2, false, false)
+                      ])
+                    ])
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _vm._m(1, false, false)
+              _vm._m(3, false, false)
             ])
           ]
         )
@@ -46859,6 +46893,24 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h1", { attrs: { id: "fh5co-logo" } }, [
       _c("a", { attrs: { href: "index.html" } }, [_vm._v("uercal")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "/main", title: "info" } }, [
+        _c("i", { staticClass: "icon-user" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "javascript:;", title: "logout" } }, [
+      _c("i", { staticClass: "icon-cross2" })
     ])
   },
   function() {
@@ -46990,6 +47042,7 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__(100);
 //
 //
 //
@@ -47134,7 +47187,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  computed: Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapGetters */])(['u_name']),
   mounted: function mounted() {
     $.getScript('/js/jquery.easing.1.3.js');
     $.getScript('/js/bootstrap.min.js');
@@ -47152,335 +47207,332 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0, false, false)
+  return _c("div", { attrs: { id: "fh5co-main" } }, [
+    _c("aside", { staticClass: "js-fullheight", attrs: { id: "fh5co-hero" } }, [
+      _c("div", { staticClass: "flexslider js-fullheight" }, [
+        _c("ul", { staticClass: "slides" }, [
+          _c(
+            "li",
+            { staticStyle: { "background-image": "url(images/img_bg_1.jpg)" } },
+            [
+              _c("div", { staticClass: "overlay" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "container-fluid" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-md-8 col-md-offset-2 text-center js-fullheight slider-text"
+                    },
+                    [
+                      _c("div", { staticClass: "slider-text-inner" }, [
+                        _c("h1", [
+                          _c("strong", [
+                            _vm._v("Welcome " + _vm._s(_vm.u_name))
+                          ])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(0, false, false),
+          _vm._v(" "),
+          _vm._m(1, false, false)
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2, false, false),
+    _vm._v(" "),
+    _vm._m(3, false, false),
+    _vm._v(" "),
+    _vm._m(4, false, false)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { attrs: { id: "fh5co-main" } }, [
-      _c(
-        "aside",
-        { staticClass: "js-fullheight", attrs: { id: "fh5co-hero" } },
-        [
-          _c("div", { staticClass: "flexslider js-fullheight" }, [
-            _c("ul", { staticClass: "slides" }, [
-              _c(
-                "li",
-                {
-                  staticStyle: {
-                    "background-image": "url(images/img_bg_1.jpg)"
-                  }
-                },
-                [
-                  _c("div", { staticClass: "overlay" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "container-fluid" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "col-md-8 col-md-offset-2 text-center js-fullheight slider-text"
-                        },
-                        [
-                          _c("div", { staticClass: "slider-text-inner" }, [
-                            _c("h1", [_c("strong", [_vm._v("Welcome Uercal")])])
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticStyle: {
-                    "background-image": "url(images/img_bg_2.jpg)"
-                  }
-                },
-                [
-                  _c("div", { staticClass: "overlay" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "container-fluid" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "col-md-8 col-md-offset-2 text-center js-fullheight slider-text"
-                        },
-                        [
-                          _c("div", { staticClass: "slider-text-inner" }, [
-                            _c("h1"),
-                            _vm._v(" "),
-                            _c("h2", [_vm._v("Welcome")]),
-                            _vm._v(" "),
-                            _c("p", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-demo popup-vimeo",
-                                  attrs: { href: "#" }
-                                },
-                                [
-                                  _c("i", { staticClass: "icon-monitor" }),
-                                  _vm._v(
-                                    "\n                        Live Preview \n                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                { staticClass: "btn btn-primary btn-learn" },
-                                [
-                                  _vm._v(
-                                    "\n                          Learn More "
-                                  ),
-                                  _c("i", { staticClass: "icon-arrow-right3" })
-                                ]
-                              )
-                            ])
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticStyle: {
-                    "background-image": "url(images/img_bg_3.jpg)"
-                  }
-                },
-                [
-                  _c("div", { staticClass: "overlay" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "container-fluid" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "col-md-8 col-md-offset-2 text-center js-fullheight slider-text"
-                        },
-                        [
-                          _c("div", { staticClass: "slider-text-inner" }, [
-                            _c("h1"),
-                            _vm._v(" "),
-                            _c("h2"),
-                            _vm._v(" "),
-                            _c("p", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-demo popup-vimeo",
-                                  attrs: { href: "#" }
-                                },
-                                [
-                                  _c("i", { staticClass: "icon-monitor" }),
-                                  _vm._v(
-                                    "\n                        Live Preview \n                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                { staticClass: "btn btn-primary btn-learn" },
-                                [
-                                  _vm._v(
-                                    "\n                          Learn More "
-                                  ),
-                                  _c("i", { staticClass: "icon-arrow-right3" })
-                                ]
-                              )
-                            ])
-                          ])
-                        ]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "fh5co-narrow-content" }, [
-        _c(
-          "h2",
-          {
-            staticClass: "fh5co-heading animate-box",
-            attrs: { "data-animate-effect": "fadeInLeft" }
-          },
-          [_vm._v("Services")]
-        ),
+    return _c(
+      "li",
+      { staticStyle: { "background-image": "url(images/img_bg_2.jpg)" } },
+      [
+        _c("div", { staticClass: "overlay" }),
         _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "row" }, [
             _c(
               "div",
               {
-                staticClass: "fh5co-feature animate-box",
-                attrs: { "data-animate-effect": "fadeInLeft" }
+                staticClass:
+                  "col-md-8 col-md-offset-2 text-center js-fullheight slider-text"
               },
               [
-                _c("div", { staticClass: "fh5co-icon" }, [
-                  _c("i", { staticClass: "icon-settings" })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "fh5co-text" }, [
-                  _c("h3", [_vm._v("Strategy")]),
+                _c("div", { staticClass: "slider-text-inner" }, [
+                  _c("h1"),
+                  _vm._v(" "),
+                  _c("h2", [_vm._v("Welcome")]),
                   _vm._v(" "),
                   _c("p", [
-                    _vm._v(
-                      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
-                    )
-                  ])
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c(
-              "div",
-              {
-                staticClass: "fh5co-feature animate-box",
-                attrs: { "data-animate-effect": "fadeInLeft" }
-              },
-              [
-                _c("div", { staticClass: "fh5co-icon" }, [
-                  _c("i", { staticClass: "icon-search4" })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "fh5co-text" }, [
-                  _c("h3", [_vm._v("Explore")]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
-                    )
-                  ])
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c(
-              "div",
-              {
-                staticClass: "fh5co-feature animate-box",
-                attrs: { "data-animate-effect": "fadeInLeft" }
-              },
-              [
-                _c("div", { staticClass: "fh5co-icon" }, [
-                  _c("i", { staticClass: "icon-paperplane" })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "fh5co-text" }, [
-                  _c("h3", [_vm._v("Direction")]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
-                    )
-                  ])
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c(
-              "div",
-              {
-                staticClass: "fh5co-feature animate-box",
-                attrs: { "data-animate-effect": "fadeInLeft" }
-              },
-              [
-                _c("div", { staticClass: "fh5co-icon" }, [
-                  _c("i", { staticClass: "icon-params" })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "fh5co-text" }, [
-                  _c("h3", [_vm._v("Expertise")]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _vm._v(
-                      "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
-                    )
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary btn-demo popup-vimeo",
+                        attrs: { href: "#" }
+                      },
+                      [
+                        _c("i", { staticClass: "icon-monitor" }),
+                        _vm._v(
+                          "\n                        Live Preview \n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("a", { staticClass: "btn btn-primary btn-learn" }, [
+                      _vm._v("\n                          Learn More "),
+                      _c("i", { staticClass: "icon-arrow-right3" })
+                    ])
                   ])
                 ])
               ]
             )
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "fh5co-narrow-content" }, [
-        _c(
-          "h2",
-          {
-            staticClass: "fh5co-heading animate-box",
-            attrs: { "data-animate-effect": "fadeInLeft" }
-          },
-          [_vm._v("Recent Blog")]
-        ),
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "li",
+      { staticStyle: { "background-image": "url(images/img_bg_3.jpg)" } },
+      [
+        _c("div", { staticClass: "overlay" }),
         _vm._v(" "),
-        _c("div", { staticClass: "row row-bottom-padded-md" })
-      ]),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "get-in-touch" } }, [
-        _c("div", { staticClass: "fh5co-narrow-content" }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              {
-                staticClass: "col-md-4 animate-box",
-                attrs: { "data-animate-effect": "fadeInLeft" }
-              },
-              [
-                _c("h1", { staticClass: "fh5co-heading-colored" }, [
-                  _vm._v("Get in touch")
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
+        _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "row" }, [
             _c(
               "div",
               {
                 staticClass:
-                  "col-md-6 col-md-offset-3 col-md-pull-3 animate-box",
-                attrs: { "data-animate-effect": "fadeInLeft" }
+                  "col-md-8 col-md-offset-2 text-center js-fullheight slider-text"
               },
               [
-                _c("p", { staticClass: "fh5co-lead" }),
-                _vm._v(" "),
-                _c("p", [
-                  _c(
-                    "a",
-                    { staticClass: "btn btn-primary", attrs: { href: "#" } },
-                    [_vm._v("Learn More")]
-                  )
+                _c("div", { staticClass: "slider-text-inner" }, [
+                  _c("h1"),
+                  _vm._v(" "),
+                  _c("h2"),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-primary btn-demo popup-vimeo",
+                        attrs: { href: "#" }
+                      },
+                      [
+                        _c("i", { staticClass: "icon-monitor" }),
+                        _vm._v(
+                          "\n                        Live Preview \n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("a", { staticClass: "btn btn-primary btn-learn" }, [
+                      _vm._v("\n                          Learn More "),
+                      _c("i", { staticClass: "icon-arrow-right3" })
+                    ])
+                  ])
                 ])
               ]
             )
           ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "fh5co-narrow-content" }, [
+      _c(
+        "h2",
+        {
+          staticClass: "fh5co-heading animate-box",
+          attrs: { "data-animate-effect": "fadeInLeft" }
+        },
+        [_vm._v("Services")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c(
+            "div",
+            {
+              staticClass: "fh5co-feature animate-box",
+              attrs: { "data-animate-effect": "fadeInLeft" }
+            },
+            [
+              _c("div", { staticClass: "fh5co-icon" }, [
+                _c("i", { staticClass: "icon-settings" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "fh5co-text" }, [
+                _c("h3", [_vm._v("Strategy")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
+                  )
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c(
+            "div",
+            {
+              staticClass: "fh5co-feature animate-box",
+              attrs: { "data-animate-effect": "fadeInLeft" }
+            },
+            [
+              _c("div", { staticClass: "fh5co-icon" }, [
+                _c("i", { staticClass: "icon-search4" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "fh5co-text" }, [
+                _c("h3", [_vm._v("Explore")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
+                  )
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c(
+            "div",
+            {
+              staticClass: "fh5co-feature animate-box",
+              attrs: { "data-animate-effect": "fadeInLeft" }
+            },
+            [
+              _c("div", { staticClass: "fh5co-icon" }, [
+                _c("i", { staticClass: "icon-paperplane" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "fh5co-text" }, [
+                _c("h3", [_vm._v("Direction")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
+                  )
+                ])
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-6" }, [
+          _c(
+            "div",
+            {
+              staticClass: "fh5co-feature animate-box",
+              attrs: { "data-animate-effect": "fadeInLeft" }
+            },
+            [
+              _c("div", { staticClass: "fh5co-icon" }, [
+                _c("i", { staticClass: "icon-params" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "fh5co-text" }, [
+                _c("h3", [_vm._v("Expertise")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts."
+                  )
+                ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "fh5co-narrow-content" }, [
+      _c(
+        "h2",
+        {
+          staticClass: "fh5co-heading animate-box",
+          attrs: { "data-animate-effect": "fadeInLeft" }
+        },
+        [_vm._v("Recent Blog")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "row row-bottom-padded-md" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { attrs: { id: "get-in-touch" } }, [
+      _c("div", { staticClass: "fh5co-narrow-content" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              staticClass: "col-md-4 animate-box",
+              attrs: { "data-animate-effect": "fadeInLeft" }
+            },
+            [
+              _c("h1", { staticClass: "fh5co-heading-colored" }, [
+                _vm._v("Get in touch")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            {
+              staticClass: "col-md-6 col-md-offset-3 col-md-pull-3 animate-box",
+              attrs: { "data-animate-effect": "fadeInLeft" }
+            },
+            [
+              _c("p", { staticClass: "fh5co-lead" }),
+              _vm._v(" "),
+              _c("p", [
+                _c(
+                  "a",
+                  { staticClass: "btn btn-primary", attrs: { href: "#" } },
+                  [_vm._v("Learn More")]
+                )
+              ])
+            ]
+          )
         ])
       ])
     ])
@@ -48639,6 +48691,10 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(100);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__static_flavr_min_js__ = __webpack_require__(227);
+var _mutations;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //引入模块
 
 
@@ -48656,9 +48712,33 @@ if (false) {
 // import qs from 'qs'
 // //
 
-var state = {};
+var state = {
+    is_login: false,
+    u_img: '',
+    u_name: '',
+    ip: '',
+    address: '',
+    welcome: ''
 
-var getters = {};
+};
+
+var getters = {
+    is_login: function is_login(state) {
+        return state.is_login;
+    },
+    u_img: function u_img(state) {
+        return state.u_img;
+    },
+    u_name: function u_name(state) {
+        return state.u_name;
+    },
+    ip: function ip(state) {
+        return state.ip;
+    },
+    address: function address(state) {
+        return state.address;
+    }
+};
 
 var actions = {
     Login: function Login(_ref) {
@@ -48764,15 +48844,55 @@ var actions = {
                 }
             }
         });
+    },
+    isLogin: function isLogin(_ref3) {
+        var commit = _ref3.commit;
+
+        axios.get('/blog/isLogin').then(function (res) {
+            if (res.data.code == 200) {
+                var user = res.data.user;
+                commit('IS_LOGIN', user);
+            } else {
+                axios.get('/blog/getIp').then(function (res) {
+                    var data = { ip: res.data.ip, address: res.data.address, welcome: 'Welcome Customer by:' };
+                    commit('IS_CUSTOMER', data);
+                });
+            }
+        }).catch(function (error) {});
+    },
+    logOut: function logOut(_ref4) {
+        var commit = _ref4.commit;
+
+        new __WEBPACK_IMPORTED_MODULE_2__static_flavr_min_js__["a" /* default */]({
+            content: 'Are you sure to logout?',
+            dialog: 'confirm',
+            onConfirm: function onConfirm() {
+                axios.post('/blog/logOut').then(function (res) {
+                    window.location.reload();
+                }).catch(function (error) {});
+            },
+            onCancel: function onCancel() {}
+        });
     }
 
     //传递给vue需要改变的数据（方法）
-};var mutations = {};
+};var mutations = (_mutations = {}, _defineProperty(_mutations, 'IS_LOGIN', function IS_LOGIN(state, user) {
+    state.u_name = user.username;
+    state.u_img = user.avatar;
+    state.is_login = true;
+}), _defineProperty(_mutations, 'IS_CUSTOMER', function IS_CUSTOMER(state, data) {
+    state.ip = data.ip;
+    state.address = data.address;
+    state.welcome = data.welcome;
+}), _mutations);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-    actions: actions
+    state: state,
+    getters: getters,
+    actions: actions,
+    mutations: mutations
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (store);

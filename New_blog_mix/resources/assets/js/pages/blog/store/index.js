@@ -15,10 +15,22 @@ import flavr from '../static/flavr.min.js'
 // import qs from 'qs'
 // //
 
-const state = {}
+const state = {
+    is_login: false,
+    u_img: '',
+    u_name: '',
+    ip: '',
+    address: '',
+    welcome: '',
+
+}
 
 const getters = {
-
+    is_login: state => state.is_login,
+    u_img: state => state.u_img,
+    u_name: state => state.u_name,
+    ip: state => state.ip,
+    address: state => state.address
 }
 
 const actions = {
@@ -131,18 +143,60 @@ const actions = {
             }
         });
 
+    },
+    isLogin: ({ commit }) => {
+        axios.get('/blog/isLogin').then(res => {
+            if (res.data.code == 200) {
+                let user = res.data.user
+                commit('IS_LOGIN', user)
+            } else {
+                axios.get('/blog/getIp').then((res) => {
+                    let data = { ip: res.data.ip, address: res.data.address, welcome: 'Welcome Customer by:' }
+                    commit('IS_CUSTOMER', data)
+                })
+            }
+        }).catch(error => {
+
+        })
+    },
+    logOut: ({ commit }) => {
+        new flavr({
+            content: 'Are you sure to logout?',
+            dialog: 'confirm',
+            onConfirm: function() {
+                axios.post('/blog/logOut').then(res => {
+                    window.location.reload()
+                }).catch(error => {
+
+                })
+            },
+            onCancel: function() {}
+        });
+
     }
 }
 
 //传递给vue需要改变的数据（方法）
 const mutations = {
-
+    ['IS_LOGIN'](state, user) {
+        state.u_name = user.username
+        state.u_img = user.avatar
+        state.is_login = true
+    },
+    ['IS_CUSTOMER'](state, data) {
+        state.ip = data.ip
+        state.address = data.address
+        state.welcome = data.welcome
+    }
 }
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-    actions
+    state,
+    getters,
+    actions,
+    mutations
 })
 
 export default store

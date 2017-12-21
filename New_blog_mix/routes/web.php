@@ -41,3 +41,7 @@ Route::any('/blog/getIp','BlogController@getIp');
 Route::post('/blog/login','LoginController@login');
 // Regist
 Route::post('/regist','LoginController@create');
+// CheckLogin
+Route::get('/blog/isLogin','LoginController@isLogin');
+// Logout
+Route::post('/blog/logOut','LoginController@loginOut');

@@ -32,7 +32,8 @@ class Users extends Model
         if(!$obj){
             $encry = new Encrypted();
             $user = $encry->encryptUser($data);
-            return self::create($user);
+            $res = self::create($user);            
+            return $res;
         }else{
             return false;
         }
@@ -58,6 +59,7 @@ class Users extends Model
             if($res){
                 $return['msg'] = '登录成功';
                 $return['code'] = 200;
+                $return['obj'] = ['id'=>$obj->id,'username'=>$obj->username,'avatar'=>$obj->avatar];
             }else{
                 $return['msg'] = '密码错误';
                 $return['code'] = 500;

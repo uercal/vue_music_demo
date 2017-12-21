@@ -9,7 +9,7 @@
                   <div class="row">
                     <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                       <div class="slider-text-inner">
-                        <h1><strong>Welcome Uercal</strong></h1>
+                        <h1><strong>Welcome {{u_name}}</strong></h1>
                       </div>
                     </div>
                   </div>
@@ -142,7 +142,11 @@
   </div>
 </template>
 <script>
+  import { mapGetters } from 'vuex'
   export default{
+    computed:mapGetters([
+      'u_name'
+    ]),
     mounted:function(){      
       $.getScript('/js/jquery.easing.1.3.js');
       $.getScript('/js/bootstrap.min.js');

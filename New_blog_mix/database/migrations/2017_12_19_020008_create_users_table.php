@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('salt');
             $table->string('hashword');
+            $table->string('avatar');
             $table->timestamps();
         });
     }

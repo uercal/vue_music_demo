@@ -13,26 +13,26 @@
           </ul>
         </nav>
         <div class="fh5co-footer">
-          <div>
-            <input id="handle_status" value="" hidden="hidden">  
+          <div>            
             <!-- customer -->
-            <p>Welcome Customer by:	
-              <p v-html="ip"></p>
-              <p v-html="address"></p>
-              <ul>
-                <li><a href="javascript:;" title="login" @click="Login"><i class="icon-user-outline"></i></a></li>
-                <li><a href="javascript:;" title="reg" @click="Regist"><i class="icon-user-add"></i></a></li>
-              </ul>            
-            </p>
+           
+            <p v-html="welcome"></p>
+            <p v-html="ip"></p>
+            <p v-html="address"></p>
+            <ul style="display:none;" v-show="!is_login">
+              <li><a href="javascript:;" title="login" @click="Login"><i class="icon-user-outline"></i></a></li>
+              <li><a href="javascript:;" title="reg" @click="Regist"><i class="icon-user-add"></i></a></li>
+            </ul>                          
+            
             
             <!-- user -->
-            <!-- <div>            
-            <img id="person" src="undefined" title="admin"/>
+            <div v-show="is_login" style="display:none;">            
+              <img id="person" :src="u_img" :title="u_name"/>
               <ul>
                 <li><a href="/main" title="info"><i class="icon-user"></i></a></li>
-                <li><a href="/logout" title="logout"><i class="icon-cross2"></i></a></li>
+                <li @click="logOut"><a href="javascript:;" title="logout"><i class="icon-cross2"></i></a></li>
               </ul>
-            </div> -->
+            </div>
 
           </div>
           <br>
@@ -64,11 +64,21 @@
         aCss:'',
         bCss:'',
         isChange:0,
-        ip:'',
-        address:'',
+        
       }      
-    },    
+    },
+    computed:mapGetters([
+      'is_login',
+      'u_img',
+      'u_name',
+      'welcome',
+      'ip',
+      'address'
+    ]),
     methods:{
+      ...mapActions([
+        'logOut'
+      ]),
       menu(index){
         this.menu_index = index
       },
@@ -95,10 +105,7 @@
       }
     },
     mounted:function(){
-      axios.get('/blog/getIp').then((res)=>{
-        this.ip = res.data.ip
-        this.address = res.data.address        
-      })
+      this.$store.dispatch('isLogin');            
       // console.log(document.querySelector('meta[name=csrf-token]').getAttribute('content'));
     }
   }
