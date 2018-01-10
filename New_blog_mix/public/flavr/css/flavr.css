@@ -125,7 +125,7 @@
 }
 
 .flavr-container .flavr-fixer .flavr-outer {
-    background: #2e3846;
+    background: rgba(30, 35, 41, 0.68);
     min-width: 300px;
     height: auto;
     text-align: center;

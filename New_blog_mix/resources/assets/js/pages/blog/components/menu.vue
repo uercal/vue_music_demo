@@ -2,7 +2,7 @@
   <body :class="bCss">
     <div id="fh5co-page">
       <a href="javascript:;" class="js-fh5co-nav-toggle fh5co-nav-toggle" :class="aCss" @click="changeCss"><i></i></a>
-      <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
+      <aside id="fh5co-aside" role="complementary" class="border js-fullheight" style="overflow-y:hidden;">
         <h1 id="fh5co-logo"><a href="index.html">uercal</a></h1>
         <nav id="fh5co-main-menu" role="navigation">      
           <ul>
@@ -27,9 +27,9 @@
             
             <!-- user -->
             <div v-show="is_login" style="display:none;">            
-              <img id="person" :src="u_img" :title="u_name"/>
+              <img id="person" :src="u_img" :title="u_name" @click="changeHead"/>
               <ul>
-                <li><a href="/main" title="info"><i class="icon-user"></i></a></li>
+                <li><a href="javascript:;" title="info"><i class="icon-user"></i></a></li>
                 <li @click="logOut"><a href="javascript:;" title="logout"><i class="icon-cross2"></i></a></li>
               </ul>
             </div>
@@ -77,7 +77,8 @@
     ]),
     methods:{
       ...mapActions([
-        'logOut'
+        'logOut',
+        'changeHead',
       ]),
       menu(index){
         this.menu_index = index
@@ -111,4 +112,10 @@
   }
   
 </script>
+<style>
+.flavr-container{
+  z-index:1002 !important;
+}
+</style>
+
 

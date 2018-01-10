@@ -38,7 +38,10 @@
   <script src="layer/layer.js"></script>
   <script src="flavr/js/flavr.min.js"></script>
   <!-- Modernizr JS-->
-  <script src="js/modernizr-2.6.2.min.js"></script>
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+  <!-- <link rel="stylesheet" href="/css/cropper.min.css"> -->
+  <link rel="stylesheet" href="/css/head.css">  
+  <script src="js/jquery.waypoints.min.js"></script>
   <!-- FOR IE9 below-->
   <!--if lt IE 9script(src='js/respond.min.js')
   -->
@@ -69,6 +72,10 @@
   
 </div>
 <script src="{{ mix('js/app_blog.js') }}"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/cropper.min.js"></script>
+<script src="/js/head.js"></script>
 <!-- <script src="/js/jquery.easing.1.3.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/jquery.waypoints.min.js"></script>

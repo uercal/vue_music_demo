@@ -45,3 +45,8 @@ Route::post('/regist','LoginController@create');
 Route::get('/blog/isLogin','LoginController@isLogin');
 // Logout
 Route::post('/blog/logOut','LoginController@loginOut');
+
+
+
+// changeHead
+Route::get('/blog/changeHead','LoginController@changeHead');

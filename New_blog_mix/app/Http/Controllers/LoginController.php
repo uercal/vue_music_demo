@@ -56,4 +56,9 @@ class LoginController extends Controller
     public function loginOut(){
         session(['user_logined'=>null]);
     }
+
+
+    public function changeHead(){
+        return view('Home.head');
+    }
 }
