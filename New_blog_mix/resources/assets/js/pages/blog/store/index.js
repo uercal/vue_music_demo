@@ -179,39 +179,26 @@ const actions = {
 
     },
     changeHead: ({ commit }) => {
-        var html = '<div id="avatar-modal">' +
-            '<div class="modal-dialog modal-lg">' +
+        var html = '<div id="crop-avatar" class="container"><div id="avatar-modal"><div class="modal-dialog modal-lg">' +
             '<form action="/changeHead" enctype="multipart/form-data" method="post" class="avatar-form">' +
-            '<div class="modal-body">' +
-            '<div class="avatar-body">' +
-            '<div class="avatar-upload">' +
-            '<input type="hidden" name="avatar_src" class="avatar-src">' +
-            '<input type="hidden" name="avatar_data" class="avatar-data">' +
-            '<label for="avatarInput">Local upload</label>' +
-            '<input id="avatarInput" type="file" name="avatar_file" class="avatar-input">' +
-            '</div>' +
-            '<div class="row">' +
-            '<div class="col-md-9">' +
-            '<div class="avatar-wrapper"></div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</form>' +
-            '</div>' +
-            '</div>' +
-            '<div aria-label="Loading" role="img" tabindex="-1" class="loading"></div>';
+            '<div class="modal-body"><div class="avatar-body"><div class="avatar-upload"><input type="hidden" name="avatar_src" class="avatar-src">' +
+            '<input type="hidden" name="avatar_data" class="avatar-data"><label for="avatarInput">Local upload</label>' +
+            '<input id="avatarInput" type="file" name="avatar_file" class="avatar-input"></div>' +
+            '<div class="row"><div class="col-md-9"><div class="avatar-wrapper"></div></div>' +
+            '</div></div></div></form></div></div><div aria-label="Loading" role="img" tabindex="-1" class="loading"></div></div>';
 
         new flavr({
             dialog: 'form',
             form: {
                 content: html,
-                method:
-
-                    'post'
+                method: 'post'
             },
             onShow: function() {
                 this.fullscreen();
+                $.getScript('https://code.jquery.com/jquery-1.12.4.min.js');
+                $.getScript('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
+                $.getScript('/js/cropper.min.js');
+                $.getScript('/js/head.js');
             },
             onSubmit: function($container, $form) {
                 alert($form.serialize());

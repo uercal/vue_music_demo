@@ -50,12 +50,12 @@
 </template>
 <script>
   export default{
-    mounted:function(){
-      $.getScript('/js/jquery.easing.1.3.js');
-      $.getScript('/js/bootstrap.min.js');
-      $.getScript('/js/jquery.waypoints.min.js');
-      $.getScript('/js/jquery.flexslider-min.js');
-      $.getScript('/js/main.js');      
-    }
+  //   mounted:function(){
+  //     $.getScript('/js/jquery.easing.1.3.js');
+  //     $.getScript('/js/bootstrap.min.js');
+  //     $.getScript('/js/jquery.waypoints.min.js');
+  //     $.getScript('/js/jquery.flexslider-min.js');
+  //     $.getScript('/js/main.js');      
+  //   }
   }
 </script>

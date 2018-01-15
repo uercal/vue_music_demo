@@ -6,17 +6,7 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Free HTML5 Website Template by FreeHTML5.co">
-  <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive">
-  <!-- Facebook and Twitter integration-->
-  <meta property="og:title" content="">
-  <meta property="og:image" content="">
-  <meta property="og:url" content="">
-  <meta property="og:site_name" content="">
-  <meta property="og:description" content="">
-  <meta name="twitter:title" content="">
-  <meta name="twitter:image" content="">
-  <meta name="twitter:url" content="">
-  <meta name="twitter:card" content="">
+  <meta name="keywords" content="free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive">  
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory-->
   <link rel="shortcut icon" href="favicon.ico">
   <!-- Animate.css-->
@@ -36,12 +26,10 @@
   <link rel="stylesheet" href="flavr/css/flavr.css">
   <script src="flavr/js/jquery.min.js"></script>
   <script src="layer/layer.js"></script>
-  <script src="flavr/js/flavr.min.js"></script>
   <!-- Modernizr JS-->
   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
-  <!-- <link rel="stylesheet" href="/css/cropper.min.css"> -->
-  <link rel="stylesheet" href="/css/head.css">  
-  <script src="js/jquery.waypoints.min.js"></script>
+  <link rel="stylesheet" href="/css/cropper.min.css">
+  <link rel="stylesheet" href="/css/head.css">
   <!-- FOR IE9 below-->
   <!--if lt IE 9script(src='js/respond.min.js')
   -->
@@ -74,11 +62,6 @@
 <script src="{{ mix('js/app_blog.js') }}"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="/js/cropper.min.js"></script>
-<script src="/js/head.js"></script>
-<!-- <script src="/js/jquery.easing.1.3.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/jquery.waypoints.min.js"></script>
-<script src="/js/jquery.flexslider-min.js"></script>
-<script src="/js/main.js"></script> -->
+<script src="js/jquery.waypoints.min.js"></script>
+<script src="js/jquery.flexslider-min.js"></script>
 </html>
