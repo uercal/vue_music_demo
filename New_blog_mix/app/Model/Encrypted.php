@@ -11,7 +11,7 @@ class Encrypted extends Model
 {
     public function encryptUser($data){
         if($data['password']==$data['repassword']){
-            $uuid = Uuid::uuid1();
+            $uuid = Uuid::uuid4();
             $salt = $uuid->toString();
             $password = $data['password'];
             $hashword = Uuid::uuid5(Uuid::NAMESPACE_DNS,$salt.$password.$salt);
