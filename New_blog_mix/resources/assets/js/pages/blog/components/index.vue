@@ -22,16 +22,7 @@
                     <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                       <div class="slider-text-inner">
                         <h1> </h1>
-                        <h2>Welcome</h2>
-                        <p>
-                          <a href="#" class="btn btn-primary btn-demo popup-vimeo">
-                          <i class="icon-monitor"> </i>
-                          Live Preview 
-                          </a>
-                          <a class="btn btn-primary btn-learn">
-                            Learn More <i class="icon-arrow-right3"> </i>
-                          </a>
-                        </p>
+                        <h2>Welcome</h2>                        
                       </div>
                     </div>
                   </div>
@@ -44,16 +35,7 @@
                     <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                       <div class="slider-text-inner">
                         <h1></h1>
-                        <h2></h2>
-                        <p>
-                          <a href="#" class="btn btn-primary btn-demo popup-vimeo">
-                          <i class="icon-monitor"> </i>
-                          Live Preview 
-                          </a>
-                          <a class="btn btn-primary btn-learn">
-                            Learn More <i class="icon-arrow-right3"> </i>
-                          </a>
-                        </p>
+                        <h2></h2>                        
                       </div>
                     </div>
                   </div>

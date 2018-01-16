@@ -178,76 +178,13 @@ const actions = {
         });
 
     },
-    changeHead: ({ commit }) => {
-        var html = '<div id="crop-avatar" class="container"><div id="avatar-modal"><div class="modal-dialog modal-lg">' +
-            '<form action="/changeHead" enctype="multipart/form-data" method="post" class="avatar-form">' +
-            '<div class="modal-body"><div class="avatar-body"><div class="avatar-upload"><input type="hidden" name="avatar_src" class="avatar-src">' +
-            '<input type="hidden" name="avatar_data" class="avatar-data"><label for="avatarInput">Local upload</label>' +
-            '<input id="avatarInput" type="file" name="avatar_file" class="avatar-input"></div>' +
-            '<div class="row"><div class="col-md-9"><div class="avatar-wrapper"></div></div>' +
-            '</div></div></div></form></div></div><div aria-label="Loading" role="img" tabindex="-1" class="loading"></div></div>';
-
-        new flavr({
-            dialog: 'form',
-            form: {
-                content: html,
-                method: 'post'
-            },
-            onShow: function() {
-                this.fullscreen();
-                $.getScript('https://code.jquery.com/jquery-1.12.4.min.js');
-                $.getScript('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js');
-                $.getScript('/js/cropper.min.js');
-                $.getScript('/js/head.js');
-            },
-            onSubmit: function($container, $form) {
-                alert($form.serialize());
-
-                return false;
-            }
-        });
-
-        // new flavr({
-        //     title: 'Charlie bit my finger',
-        //     content: '<iframe width="" height="" src="/blog/changeHead"' +
-        //         'frameborder = "0" allowfullscreen id="if"> < /iframe>',
-        //     onShow: function() {
-        //         this.fullscreen();
-        //         document.body.style.overflow = "hidden";
-        //         // 
-        //         let winWidth
-        //         let winHeight
-        //         if (window.innerWidth)
-        //             winWidth = window.innerWidth;
-        //         else if ((document.body) && (document.body.clientWidth))
-        //             winWidth = document.body.clientWidth;
-        //         // 获取窗口高度
-        //         if (window.innerHeight)
-        //             winHeight = window.innerHeight;
-        //         else if ((document.body) && (document.body.clientHeight))
-        //             winHeight = document.body.clientHeight;
-
-        //         $('#if').attr('width', 470);
-        //         $('#if').attr('height', 440);
-        //         return false;
-        //     },
-        //     onClose: function() {
-        //         document.body.style.overflow = "auto";
-        //     },
-        //     buttons: {
-        //         close: {
-
-        //         }
-        //     },
-        // });
-    }
 }
 
 //传递给vue需要改变的数据（方法）
 const mutations = {
     ['IS_LOGIN'](state, user) {
         state.u_name = user.username
-        state.u_img = user.avatar
+        state.u_img = user.avatar ? user.avatar : '/images/1.jpg'
         state.is_login = true
     },
     ['IS_CUSTOMER'](state, data) {

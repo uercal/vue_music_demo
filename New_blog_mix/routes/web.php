@@ -49,4 +49,4 @@ Route::post('/blog/logOut','LoginController@loginOut');
 
 
 // changeHead
-Route::get('/blog/changeHead','LoginController@changeHead');
+Route::any('/blog/changeHead','UploadController@changeHead');

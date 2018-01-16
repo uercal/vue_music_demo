@@ -43,6 +43,9 @@
     }
     .icon-user{
     	font-size:200%;
+    }   
+    .icon-settings{
+      font-size:170%;
     }
     .icon-cross2{
     	font-size:200%;			

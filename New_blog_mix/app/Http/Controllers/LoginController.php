@@ -46,7 +46,9 @@ class LoginController extends Controller
     public function isLogin(){
         $obj = session('user_logined');
         if($obj){
-            return ['user'=>$obj,'code'=>200];
+            // 重新获取数据
+            $res = Users::where('id',$obj['id'])->first();
+            return ['user'=>$res,'code'=>200];
         }else{
             return ['code'=>500];
         }
@@ -57,8 +59,4 @@ class LoginController extends Controller
         session(['user_logined'=>null]);
     }
 
-
-    public function changeHead(){
-        return view('Home.head');
-    }
 }

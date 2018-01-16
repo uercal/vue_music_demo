@@ -27,7 +27,8 @@ import router from './router/index';
 //store
 import store from './store'
 
-
+require('./static/head/cropper.min.js');
+require('./static/head/main.js');
 // 
 // import ElementUI from 'element-ui';
 // import 'element-ui/lib/theme-chalk/index.css';
