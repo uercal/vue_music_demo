@@ -15,15 +15,15 @@
         <div class="fh5co-footer">
           <div>            
             <!-- customer -->
-           
-            <p v-html="welcome"></p>
-            <p v-html="ip"></p>
-            <p v-html="address"></p>
-            <ul style="display:none;" v-show="!is_login">
-              <li><a href="javascript:;" title="login" @click="Login"><i class="icon-user-outline"></i></a></li>
-              <li><a href="javascript:;" title="reg" @click="Regist"><i class="icon-user-add"></i></a></li>
-            </ul>                          
-            
+            <div v-show="!is_login" style="display:none;">
+              <p v-html="welcome"></p>
+              <p v-html="ip"></p>
+              <p v-html="address"></p>
+              <ul>
+                <li><a href="javascript:;" title="login" @click="Login"><i class="icon-user-outline"></i></a></li>
+                <li><a href="javascript:;" title="reg" @click="Regist"><i class="icon-user-add"></i></a></li>
+              </ul>                          
+            </div>
             
             <!-- user -->
             <div v-show="is_login" style="display:none;">                        

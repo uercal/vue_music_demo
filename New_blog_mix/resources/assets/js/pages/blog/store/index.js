@@ -184,7 +184,7 @@ const actions = {
 const mutations = {
     ['IS_LOGIN'](state, user) {
         state.u_name = user.username
-        state.u_img = user.avatar ? user.avatar : '/images/1.jpg'
+        state.u_img = user.avatar ? user.avatar + '?' + Math.random(1) : '/images/1.jpg'
         state.is_login = true
     },
     ['IS_CUSTOMER'](state, data) {
