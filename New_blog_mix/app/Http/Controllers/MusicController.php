@@ -133,13 +133,23 @@ class MusicController extends Controller
       return $API;
     }
 
+    // important
     private function curlset(){    
       $BASE=array(
-              'referer'   => 'https://music.163.com/',
-              'cookie'    => 'os=linux; appver=1.0.0.1026; osver=Ubuntu%2016.10; MUSIC_U=78d411095f4b022667bc8ec49e9a44cca088df057d987f5feaf066d37458e41c4a7d9447977352cf27ea9fee03f6ec4441049cea1c6bb9b6; __remember_me=true',
-              'useragent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+        'referer'   => 'https://music.163.com/',
+        'cookie'    => 'os=linux; appver=1.0.0.1026; osver=Ubuntu%2016.10; MUSIC_U=' . $this->getRandomHex(112) . '; __remember_me=true',
+        'useragent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
       );      
       return $BASE;
+    }
+
+    // 
+    private function getRandomHex($length){
+        $val = '';
+        for( $i=0; $i<$length; $i++ ) {
+            $val .= chr( rand( 65, 90 ) );
+        }
+        return $val;
     }
 
     

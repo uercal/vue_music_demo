@@ -46,7 +46,8 @@ Route::get('/blog/isLogin','LoginController@isLogin');
 // Logout
 Route::post('/blog/logOut','LoginController@loginOut');
 
-
+// Blog - main
+Route::any('/blog/main','BlogController@main');
 
 // changeHead
 Route::any('/blog/changeHead','UploadController@changeHead');

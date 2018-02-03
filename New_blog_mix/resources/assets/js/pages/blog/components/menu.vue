@@ -29,7 +29,7 @@
             <div v-show="is_login" style="display:none;">                        
               <img id="person" :src="u_img" title="Change Avatar" class="avatar-view"/>
               <ul>
-                <li><a href="javascript:;" title="info"><i class="icon-user"></i></a></li>               
+                <li><a href="javascript:;" title="info" @click="info"><i class="icon-user"></i></a></li>               
                 <li @click="logOut"><a href="javascript:;" title="logout"><i class="icon-cross2"></i></a></li>
               </ul>
             </div>
@@ -113,8 +113,7 @@
 </template>
 
 
-<script>
-  import axios from 'axios'
+<script>  
   import { mapGetters,mapActions } from 'vuex'
   export default {
     data:()=>{
@@ -162,6 +161,9 @@
       },
       Regist:function(){
         this.$store.dispatch('Regist')
+      },
+      info:function(){
+        window.location.href = '/blog/main';
       }
     },
     mounted:function(){

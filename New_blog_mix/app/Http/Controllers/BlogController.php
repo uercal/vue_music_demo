@@ -22,4 +22,8 @@ class BlogController extends Controller
     public function login(){
       return '1';
     }
+
+    public function main(){
+      return view('Home.blog_main');
+    }
 }
