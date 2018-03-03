@@ -55,6 +55,41 @@ class UploadController extends Controller
   }
 
 
+  // Background
+  public function changeBack(Request $request){
+    $file = $request->input('base64');
+    $base64_image_content = trim($file);
+    //正则匹配出图片的格式
+    if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)) {
+        $type = $result[2];//图片后缀
+           
+        $new_file = 'blog_back_pic/';
+        // if (!file_exists($new_file)) {
+        //     //检查是否有该文件夹，如果没有就创建，并给予最高权限
+        //     mkdir($new_file, 0700);
+        // }
+        $user = session('user_logined');
+        if(!$user) {
+          return ['status'=>404,'msg'=>'no user'];
+        }
+        
+        $filename = $user['username'] . ".{$type}"; //文件名
+        $new_file = $new_file . $filename;
+         
+        //写入操作
+        if (file_put_contents($new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))) {    
+            $res = Users::where('id',$user['id'])->update(['blog_background'=>'/'.$new_file]);
+            if($res!==false){
+              return ['status'=>200,'msg'=>'success'];                                
+            }else{
+              return ['status'=>500,'msg'=>'error~ db'];
+            }
+        } else {
+            return ['status'=>500,'msg'=>'error~ dir'];
+        }
+    }
+  }
+
   // head
   private function setSrc($src) {
     if (!empty($src)) {

@@ -2,7 +2,7 @@
   <div>
     <!-- personal info -->
     <div id="page">
-      <div id="fh5co-aside" style="background-image: url('/images/1.jpg')">
+      <div id="fh5co-aside" :style="{backgroundImage:'url('+ b_img +')'}">
         <div class="overlay"></div>
         <nav role="navigation" v-show="is_login" style="display:none;">
           <ul>
@@ -62,10 +62,10 @@
     </div>
 
     <!-- upload  -->
-    <form action="" style="display:none;">
-      <input type="file" name="b" id="file" ref="bb">
-      <button type="submit"></button>
-    </form>
+   
+    <input type="file" name="b" id="file" ref="bb" value="" style="display:none;">
+      
+    
   </div>
 </template>
 <script>
@@ -84,6 +84,8 @@
     mounted:function(){
       this.$store.dispatch('overCss');
       this.$store.dispatch('isLogin');
+
+      
     }
   }
 </script>

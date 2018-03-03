@@ -52,6 +52,30 @@ const actions = {
             }
         })
 
+
+        $('#file').on('change', function(event) {
+            if (event.target.files[0].size > 2 * 1024 * 1024) {
+                alert('上传文件过大,要求低于2MB')
+            } else {
+                let file = event.target.files[0];
+                // 
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function() {
+                    let data = reader.result
+                    axios.post('/blog/changeBack', { base64: data }).then(res => {
+                        console.log(res)
+                        if (res.data.status == 200) {
+                            // success 
+                            commit('CHANGE_BACK', data)
+                        } else {
+                            alert(res.data.msg)
+                        }
+                    })
+                }
+            }
+        })
+
     },
 }
 
@@ -60,8 +84,12 @@ const mutations = {
     ['IS_LOGIN'](state, user) {
         state.u_name = user.username
         state.u_img = user.avatar ? user.avatar + '?' + Math.random(1) : '/images/1.jpg'
-        state.b_img = user.blog_background
+        state.b_img = user.blog_background ? user.blog_background : '/images/1.jpg'
         state.is_login = true
+    },
+    ['CHANGE_BACK'](state, data) {
+        state.b_img = data
+        console.log(state.b_img)
     }
 }
 

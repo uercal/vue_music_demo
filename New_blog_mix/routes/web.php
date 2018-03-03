@@ -51,3 +51,5 @@ Route::any('/blog/main','BlogController@main');
 
 // changeHead
 Route::any('/blog/changeHead','UploadController@changeHead');
+
+Route::post('/blog/changeBack','UploadController@changeBack');
