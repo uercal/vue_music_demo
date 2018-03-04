@@ -4,7 +4,7 @@
     </div>
     <div id="list" style="height:100%;width:25%;overflow-x:hidden;overflow-y:auto;">
       <el-button @click="back">←</el-button>                                 
-      <p> 感谢 <a href="https://github.com/uercal">Uercal</a></p>
+      <p>  <a href="https://github.com/uercal">Uercal</a></p>
       <el-button @click="showBgm">{{ show_title }}</el-button>
       <transition name="slide-fade">
         <el-card class="box-card" v-show="isload">                  

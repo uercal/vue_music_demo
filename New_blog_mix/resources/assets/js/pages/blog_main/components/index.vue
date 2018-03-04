@@ -25,13 +25,13 @@
             </div>
           </ul>
           <br>
-          <ul>
+          <!-- <ul>
             <li>
               <router-link to="/detail/1">
               <a id="add" href="javascript:;" title="Add"><i class="icon-plus"></i></a>
               </router-link>
             </li>
-          </ul>
+          </ul> -->
         </nav>
         <div class="featured" v-show="is_login" style="display:none;">
           <span>user</span>
@@ -40,8 +40,9 @@
       </div>
     </div>
     <!-- blogs -->
-    <div id="fh5co-main-content">
+    <div id="fh5co-main-content" style="background-color:#AAAAAA;height:1000px;">
       <div class="fh5co-post">
+        
         <div style="background-image: url('/images/img_bg_3.jpg'); 
         opacity: 0.4; background-position: 0% 0%;" data-stellar-background-ratio="0.1" 
         class="fh5co-entry padding">
@@ -53,11 +54,24 @@
             <p></p>
           </div>
         </div>
-        <footer>
+
+        <!-- add -->
+        <div style="background-color: #AAAAAA; border-bottom:0px !important;padding: 10px !important;
+        opacity: 0.4; background-position: 0% 0%;" data-stellar-background-ratio="0.1" 
+        class="fh5co-entry padding">
+          <div style="width: inherit;text-align:center;">                        
+              <a id="add" href="javascript:;" title="Add" style="font-size:500%;"><i class="icon-plus"></i></a>                       
+          </div>
+        </div>
+
+
+
+
+        <!-- <footer>
           <div>
             <input id="handle_status" value="" hidden="hidden">
           </div>
-        </footer>
+        </footer> -->
       </div>
     </div>
 
